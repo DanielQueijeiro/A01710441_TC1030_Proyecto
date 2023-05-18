@@ -24,7 +24,7 @@ Consta de un menu con las opciones iniciales y corre sobre consola.
 ### Consideraciones
 El programa solo corre en la consola y esta hecho con c++ standard por lo que corre en todos los sistemas operativos
 
-- compilar con: "g++ Personas.h, Estudiante.h, Empleado.h, Profesor.h, Campus.h, Tec.h, main.cpp"
+- compilar con: "g++ Personas.h Estudiante.h Empleado.h Profesor.h Campus.h Tec.h main.cpp"
 
 - correr en linux: "/a.out"
 
