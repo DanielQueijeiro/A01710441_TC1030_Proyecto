@@ -5,6 +5,7 @@ El proyecto se basa en crear un sistema con el cual el Tecnológico de Monterrey
 
 #### Funcionalidad
 Se espera que con el código se optimize la manera en que el Tec administre a los integrantes de su comunidad, siendo capaces de agregar y acomodarlos por su rol dentro de la institución, o en caso de que sea necesario, también poder eliminarlos del sistema. Con esto se podrá tener en un solo sistema la información de todos los campus para su acceso y modificación rápida.
+
 El programa solo permite:
 - Ingreso de nuevos integrantes de la comunidad Tec.
 - Eliminación de integrantes ingresados en el sistema.
