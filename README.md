@@ -5,3 +5,27 @@ El proyecto se basa en crear un sistema con el cual el Tecnológico de Monterrey
 
 #### Funcionalidad
 Se espera que con el código se optimize la manera en que el Tec administre a los integrantes de su comunidad, siendo capaces de agregar y acomodarlos por su rol dentro de la institución, o en caso de que sea necesario, también poder eliminarlos del sistema. Con esto se podrá tener en un solo sistema la información de todos los campus para su acceso y modificación rápida.
+El programa solo permite:
+- Ingreso de nuevos integrantes de la comunidad Tec.
+- Eliminación de integrantes ingresados en el sistema.
+- Obtener información sobre cualquier persona registrada en el sistema. 
+- El cálculo de diferentes tipos de sueldos: Sueldo por clase para profesores, y sueldo por hora a empleados.
+- El cálculo de colegiatura para estudiantes según el porcentaje de beca que tengan.
+
+Consta de un menu con las opciones iniciales y corre sobre consola.
+
+### Limitaciones (Casos que harían que el programa deje de funcionar)
+- En caso de intentar ingresar un nuevo campus.
+- En caso de intentar eliminar un campus.
+- En caso de intentar obtener información que no se registra en el sistema.
+- En caso de intentar obtener la colegiatura de un estudiante con una beca negativa.
+- En caso de intentar obtener el sueldo de un profesor o empleado con clases/horas negativas.
+
+### Consideraciones
+El programa solo corre en la consola y esta hecho con c++ standard por lo que corre en todos los sistemas operativos
+
+- compilar con: "g++ Personas.h, Estudiante.h, Empleado.h, Profesor.h, Campus.h, Tec.h, main.cpp"
+
+- correr en linux: "/a.out"
+
+- correr en windows: "a.exe"
