@@ -16,9 +16,10 @@ El programa solo permite:
 Consta de un menu con las opciones iniciales y corre sobre consola.
 
 ### Limitaciones (Casos que harían que el programa deje de funcionar)
-- En caso de intentar ingresar un nuevo campus.
-- En caso de intentar eliminar un campus.
-- En caso de intentar obtener información que no se registra en el sistema.
+- En caso de intentar crear más de una instancia de Tec.
+- En caso de intentar crear más de 25 instancias de Campus. (Solo existen actualmente 25 campus)
+- En caso de intentar ingresar un número total de Personas en un Campus como negativo.
+- En caso de intentar ingresar un número total de Campus en el Tec como negativo.
 - En caso de intentar obtener la colegiatura de un estudiante con una beca negativa.
 - En caso de intentar obtener el sueldo de un profesor o empleado con clases/horas negativas.
 
