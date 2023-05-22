@@ -1,4 +1,5 @@
-# Proyecto TC1030 / Daniel Queijeiro Albo
+# Proyecto TC1030 
+## Daniel Queijeiro Albo / A01710441
 
 #### Contexto
 El proyecto se basa en crear un sistema con el cual el Tecnológico de Monterrey pueda monitorear de manera más eficiente y correcta a las personas quienes son integrantes de la comunidad del Tec (estudiantes, profesores y empleados).
