@@ -25,12 +25,10 @@ public:
     string getNombre();
     int getEdad();
     string getLugar();
-    void mostrarInfo();
+    virtual void mostrarInfo() = 0;
 };
 
 //Constructores
-
-
 Personas::Personas(string nom, int age){
     nombre = nom;
     edad = age;
@@ -67,6 +65,13 @@ int Personas::getEdad() {
 string Personas::getLugar() {
     return lugarNatal;
 }
+
+void Personas::mostrarInfo() {
+    cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
+    cout<<"Lugar: "<<getLugar()<<"\n\n";
+}
+
+
 
 //Clase hija Estudiante
 class Estudiante : public Personas{
@@ -179,6 +184,8 @@ void Estudiante::mostrarInfo() {
 }
 
 
+
+
 //Clase hija Profesor
 class Profesor: public Personas {
 private:
@@ -234,6 +241,7 @@ void Profesor::mostrarInfo() {
     cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<numClases<<"\n";
     cout<<"Salario mensual: "<<obtenerSalario()<<"\n\n";
 }
+
 
 
 //Clase hija Empleado
