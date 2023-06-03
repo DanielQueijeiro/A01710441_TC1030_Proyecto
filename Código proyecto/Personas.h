@@ -25,7 +25,7 @@ public:
     string getNombre();
     int getEdad();
     string getLugar();
-    virtual void mostrarInfo() = 0;
+    virtual void mostrarInfo()=0;
 };
 
 //Constructores
@@ -176,13 +176,17 @@ void Estudiante::mostrarClases() {
 }
 
 void Estudiante::mostrarInfo() {
-    cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
-    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Carrera: "<<getCarrera()<<"\n";
-    cout<<"Clases inscritas: "<<numClases<<"\n";
-    cout<<getBeca()<<"\n"<<"Porcentaje de beca: "<<getPorcBeca()<<"\n";
-    cout<<"Pago mensual de colegiatura es: "<<obtenerColegiatura()<<"\n\n";
+    cout << "Nombre: " << getNombre() << "\n" << "Edad: " << getEdad() << "\n";
+    cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
+    cout << "Clases inscritas: " << numClases << "\n";
+    cout << getBeca() << "\n" << "Porcentaje de beca: " << getPorcBeca() << "\n";
+    if (obtenerColegiatura() == 0) {
+        cout<<"No hay clases registradas, no se puede calcular el pago mensual \n";
+    }
+    else {
+        cout << "Pago mensual de colegiatura es: " << obtenerColegiatura() << "\n\n";
+    }
 }
-
 
 
 
@@ -254,7 +258,7 @@ class Empleado:public Personas{
     public:
         Empleado(): Personas(){};
 
-        Empleado(string nom, int age, int salarioInd, string role, string uniform): Personas(nom, age){
+        Empleado(string nom, int age, string ciudad, int salarioInd, string role, string uniform): Personas(nom, age, ciudad){
             salarioMensual = salarioInd;
             uniforme = uniform;
             rol = role;

@@ -23,7 +23,7 @@ class Campus{
         }
         Campus(string nom);
 
-        void getNombre();
+        string getNombre();
         void agregarEstudiante(Estudiante estudiante);
         void mostrarEstudiantes();
         void getTotalEstudiantes();
@@ -36,24 +36,26 @@ class Campus{
         void mostrarEmpleados();
         void getTotalEmpleados();
 
+        void mostrarPersonas();
+
 };
 
 Campus::Campus(string nom) {
     nombre = nom;
 }
 
-void Campus::getNombre() {
-    cout<< nombre<<"\n";
+string Campus::getNombre() {
+    return nombre;
 }
 
 
 //Estudiantes
-void Campus::agregarEstudiante(Estudiante estudiante) {
+void Campus::agregarEstudiante(Estudiante estudiante){
     arrEstudiantes[matriculaEst] = estudiante;
     matriculaEst++;
 }
 
-void Campus::mostrarEstudiantes() {
+void Campus::mostrarEstudiantes(){
     for(int i = 0 ; i <matriculaEst; i++){
         cout<<"Matricula del estudiante: A" << i<<endl;
         arrEstudiantes[i].mostrarInfo();
@@ -106,5 +108,21 @@ void Campus::getTotalEmpleados() {
     cout<<"\n\n";
 }
 
+
+void Campus::mostrarPersonas() {
+    cout<<"Total de estudiantes registrados: "<<matriculaEst<<endl;
+    for(int i=0;i<matriculaEst;i++){
+        cout<<arrEstudiantes[i].getNombre()<<endl;
+    }
+
+    cout<<endl<<"Total de profesores registrados: "<<matriculaProf<<endl;
+    for(int i=0;i<matriculaProf;i++){
+        cout<<arrProfesores[i].getNombre()<<endl;
+    }
+    cout<<endl<<"Total de empleados registrados: "<<emplID<<endl;
+    for(int i=0;i<emplID;i++){
+        cout<<arrEmpleados[i].getNombre()<<endl;
+    }
+}
 
 #endif //CAMPUS_H
