@@ -79,29 +79,17 @@ class Estudiante : public Personas{
         string carrera;
         bool beca;
         float porcBeca;
-        int colegiatura;
         string clases[10];
-        string claseInd;
         int numClases;
 
     public:
         Estudiante(): Personas(){}
 
-        Estudiante(string nom, int age, string career, bool apoyo): Personas(nom, age){
-            carrera = career;
-            beca = apoyo;
-            colegiatura = 0;
-            numClases = 0;
-            claseInd = "";
-        }
-
         Estudiante(string nom, int age, string ciudad, string career, bool apoyo, float becaPorc): Personas(nom, age, ciudad){
             carrera = career;
             beca = apoyo;
             porcBeca = becaPorc;
-            colegiatura = 0;
             numClases = 0;
-            claseInd = "";
         }
         void setCarrera(string career);
         void setBeca(bool apoyo);
@@ -110,9 +98,10 @@ class Estudiante : public Personas{
         string getCarrera();
         string getBeca();
         float getPorcBeca();
+        int getClases();
 
         void agregarClases(string claseInd);
-        int obtenerColegiatura();
+        float obtenerColegiatura();
         void mostrarClases();
         void mostrarInfo();
 };
@@ -122,7 +111,7 @@ string Estudiante::getCarrera() {
 }
 
 string Estudiante::getBeca() {
-    if(beca==true){
+    if(beca){
         return "Tiene beca";
     }
     else{
@@ -131,7 +120,7 @@ string Estudiante::getBeca() {
 }
 
 float Estudiante::getPorcBeca() {
-    if(beca == true){
+    if(beca){
         return porcBeca;
     }
     else{
@@ -139,6 +128,9 @@ float Estudiante::getPorcBeca() {
     }
 }
 
+int Estudiante::getClases(){
+    return numClases;
+}
 
 void Estudiante::setCarrera(string career) {
     carrera = career;
@@ -157,22 +149,21 @@ void Estudiante::agregarClases(string claseInd) {
     numClases++;
 }
 
-int Estudiante::obtenerColegiatura() {
+float Estudiante::obtenerColegiatura() {
     //Costo de clase $8,105
-    if(numClases>0){
-    int totalColegiatura = (numClases * 8105)*(1-porcBeca);
-    return totalColegiatura;}
+    if(numClases==0){return 0;}
     else{
-        return 0;
+        float totalColegiatura = (numClases * 8105)*(1-porcBeca);
+        return totalColegiatura;
     }
 }
 
 void Estudiante::mostrarClases() {
     cout<<"Las clases registradas son: ";
     for(int i; i<numClases; i++){
-        cout<<clases[i]<<"  ";
+        cout<<clases[i]<<endl;
+        cout<<numClases<<endl;
     }
-    cout<<"\n";
 }
 
 void Estudiante::mostrarInfo() {
@@ -180,7 +171,7 @@ void Estudiante::mostrarInfo() {
     cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
     cout << "Clases inscritas: " << numClases << "\n";
     cout << getBeca() << "\n" << "Porcentaje de beca: " << getPorcBeca() << "\n";
-    if (obtenerColegiatura() == 0) {
+    if (numClases == 0) {
         cout<<"No hay clases registradas, no se puede calcular el pago mensual \n";
     }
     else {
@@ -199,11 +190,6 @@ private:
 
 public:
     Profesor(): Personas(){};
-
-    Profesor(string nom, int age, int salarioInd) : Personas(nom, age) {
-        numClases = 0;
-        salarioClase = salarioInd;
-    }
 
     Profesor(string nom, int age, string ciudad, int salarioInd) : Personas(nom, age, ciudad) {
         numClases = 0;
@@ -254,6 +240,7 @@ class Empleado:public Personas{
         int salarioMensual;
         string uniforme;
         string rol;
+        int horas;
 
     public:
         Empleado(): Personas(){};

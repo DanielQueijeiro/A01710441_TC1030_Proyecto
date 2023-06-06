@@ -24,6 +24,7 @@ class Campus{
         Campus(string nom);
 
         string getNombre();
+
         void agregarEstudiante(Estudiante estudiante);
         void mostrarEstudiantes();
         void getTotalEstudiantes();
@@ -56,10 +57,14 @@ void Campus::agregarEstudiante(Estudiante estudiante){
 }
 
 void Campus::mostrarEstudiantes(){
-    for(int i = 0 ; i <matriculaEst; i++){
-        cout<<"Matricula del estudiante: A" << i<<endl;
-        arrEstudiantes[i].mostrarInfo();
-        cout<<"\n";
+    if (matriculaEst == 0) {
+        cout << "No hay estudiantes registrados " << endl;
+    } else {
+        for (int i = 0; i < matriculaEst; i++) {
+            cout << "Matricula del estudiante: A" << i << endl;
+            arrEstudiantes[i].mostrarInfo();
+            cout << "\n";
+        }
     }
 }
 
@@ -76,10 +81,14 @@ void Campus::agregarProfesor(Profesor profesor) {
 }
 
 void Campus::mostrarProfesores() {
-    for(int i = 0 ; i <matriculaProf; i++){
-        cout<<"Matricula del profesor: P" << i<<endl;
-        arrProfesores[i].mostrarInfo();
-        cout<<"\n";
+    if (matriculaProf == 0) {
+        cout << "No hay profesores registrados " << endl;
+    } else {
+        for (int i = 0; i < matriculaProf; i++) {
+            cout << "Matricula del profesor: P" << i << endl;
+            arrProfesores[i].mostrarInfo();
+            cout << "\n";
+        }
     }
 }
 
@@ -96,10 +105,15 @@ void Campus::agregarEmpleado(Empleado empleado) {
 }
 
 void Campus::mostrarEmpleados() {
-    for(int i = 0 ; i <emplID; i++){
-        cout<<"ID del empleado: ID" << i<<endl;
-        arrEmpleados[i].mostrarInfo();
-        cout<<"\n";
+    if (matriculaProf == 0) {
+        cout << "No hay empleados registrados " << endl;
+    }
+    else {
+        for (int i = 0; i < emplID; i++) {
+            cout << "ID del empleado: ID" << i << endl;
+            arrEmpleados[i].mostrarInfo();
+            cout << "\n";
+        }
     }
 }
 
@@ -108,21 +122,33 @@ void Campus::getTotalEmpleados() {
     cout<<"\n\n";
 }
 
-
 void Campus::mostrarPersonas() {
-    cout<<"Total de estudiantes registrados: "<<matriculaEst<<endl;
-    for(int i=0;i<matriculaEst;i++){
-        cout<<arrEstudiantes[i].getNombre()<<endl;
+    if (matriculaEst == 0) {
+        cout << "No hay estudiantes registrados " << endl;
+    } else {
+        cout << "Total de estudiantes registrados: " << matriculaEst << endl;
+        for (int i = 0; i < matriculaEst; i++) {
+            cout << arrEstudiantes[i].getNombre() << endl<<endl;
+        }
     }
 
-    cout<<endl<<"Total de profesores registrados: "<<matriculaProf<<endl;
-    for(int i=0;i<matriculaProf;i++){
-        cout<<arrProfesores[i].getNombre()<<endl;
+    if (matriculaProf == 0) {
+        cout << "No hay profesores registrados " << endl;
+    } else {
+        cout <<"Total de profesores registrados: " << matriculaProf << endl;
+        for (int i = 0; i < matriculaProf; i++) {
+            cout << arrProfesores[i].getNombre() << endl<<endl;
+        }
     }
-    cout<<endl<<"Total de empleados registrados: "<<emplID<<endl;
-    for(int i=0;i<emplID;i++){
-        cout<<arrEmpleados[i].getNombre()<<endl;
+
+    if (matriculaProf == 0) {
+        cout << "No hay empleados registrados " << endl;
     }
+    else {
+        cout << "Total de empleados registrados: " << emplID << endl;
+        for (int i = 0; i < emplID; i++) {
+            cout << arrEmpleados[i].getNombre() << endl<<endl;
+            }
+        }
 }
-
 #endif //CAMPUS_H

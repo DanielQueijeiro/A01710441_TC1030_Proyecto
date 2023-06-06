@@ -8,6 +8,11 @@ using namespace std;
 
 int main() {
     system( "Title Sistema Tec" );
+
+    Estudiante *estudiantes[100];
+    Profesor *profesores[100];
+    Empleado *empleados[100];
+
     int op;
     string nomCampus;
     int numEstudiantes;
@@ -28,197 +33,210 @@ int main() {
         cout<<"1.- Administrar estudiantes"<<endl;
         cout<<"2.- Administrar profesores"<<endl;
         cout<<"3.- Administrar empleados"<<endl;
-        cout<<"4.- Mostrar personas en el campus"<<endl;
-        cout<<"5.- Mostrar estudiantes"<<endl;
-        cout<<"6.- Mostrar profesores"<<endl;
-        cout<<"7.- Mostrar empleados"<<endl;
-        cout<<"8.- Salir"<<endl;
+        cout<<"4.- Mostrar todas las personas registradas en el campus"<<endl;
+        cout<<"5.- Salir"<<endl;
         cin>>op;
 
-        if(op==1){
+        //Administrar estudiantes
+        if(op==1) {
             system("cls");
-            cout<<"Por favor ingrese la opcion que desee realizar"<<endl;
-            cout<<"1.- Agregar estudiantes"<<endl;
-            cout<<"2.- Agregar clases a un estudiante"<<endl;
-            cout<<"3.- Mostrar estudiantes"<<endl;
-            cout<<"3.- Eliminar estudiantes"<<endl;
-        }
+            cout << "Por favor ingrese la opcion que desee realizar" << endl;
+            cout << "1.- Agregar estudiantes" << endl;
+            cout << "2.- Agregar clases a un estudiante" << endl;
+            cout << "3.- Mostrar estudiantes" << endl;
+            cout << "4.- Regresar al menu principal"<< endl;
+            op = 0;
+            cin>>op;
 
+            //Agregar estudiantes
+            if (op == 1) {
+                op = 0;
+                system("cls");
+                cout << "Por favor ingrese el numero de estudiantes que agregara" << endl;
+                int auxEst;
+                cin >> auxEst;
+                cout << "Ingrese los datos de los alumnos" << endl;
+                for (int i = 0; i < auxEst; i++) {
+                    string nom, ciudad, career, auxApoyo;
+                    int age, _numclases;
+                    bool apoyo;
+                    float becaPorc;
+                    cout << "Nombre" << endl;cin >> nom;
+                    cout << "Edad" << endl;cin >> age;
+                    cout << "Ciudad" << endl;cin >> ciudad;
+                    cout << "Carrera" << endl;cin >> career;
+                    cout << "Tiene beca (y/n)" << endl;cin >> auxApoyo;
+                    if (auxApoyo == "y") {
+                        apoyo = true;
+                    } else { apoyo = false; }
+                    if (apoyo == true) {
+                        cout << "Porc beca" << endl;
+                        cin >> becaPorc;
+                    } else { becaPorc = 0; }
 
-        if(op==1){
-            system("cls");
-            cout<<"Por favor ingrese el numero de estudiantes que agregara"<<endl;
-            int auxEst;
-            cin>>auxEst;
-            cout<<"Ingrese los datos de los alumnos"<<endl;
-            for(int i=0;i<auxEst;i++){
-                string nom;
-                int age;
-                string ciudad;
-                string career;
-                bool apoyo;
-                string auxApoyo;
-                float becaPorc;
-                cout<<"Nombre"<<endl;cin>>nom;
-                cout<<"Edad"<<endl;cin>>age;
-                cout<<"Ciudad"<<endl;cin>>ciudad;
-                cout<<"Carrera"<<endl;cin>>career;
-                cout<<"Tiene beca (y/n)"<<endl;cin>>auxApoyo;
-                if(auxApoyo=="y"){
-                    apoyo = true;
-                }else{apoyo = false;}
-                if(apoyo==true) {
-                    cout << "Porc beca" << endl;
-                    cin >> becaPorc;
-                }else{becaPorc = 0;}
-                Estudiante *estudiante[i];
-                estudiante[i] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
-                campus.agregarEstudiante(*estudiante[i]);
+                    estudiantes[i] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
+                    campus.agregarEstudiante(*estudiantes[i]);
+                }
+                cout << "Estudiantes registrados" << endl;
+                system("pause");
             }
-            cout<<"Estudiantes registrados"<<endl;
-            system("pause");
-        }
 
-        else if(op==2){
-            system("cls");
-            cout<<"Por favor ingrese el numero de profesores que agregara"<<endl;
-            int auxProf;
-            cin>>auxProf;
-            cout<<"Ingrese los datos de los profesores"<<endl;
-            for(int i=0;i<auxProf;i++){
-                string nom;
-                int age;
-                string ciudad;
-                int salarioInd;
-                cout<<"Nombre"<<endl;cin>>nom;
-                cout<<"Edad"<<endl;cin>>age;
-                cout<<"Ciudad"<<endl;cin>>ciudad;
-                cout<<"Salario"<<endl;cin>>salarioInd;
-                Profesor *profesor[i];
-                profesor[i] = new Profesor(nom, age, ciudad, salarioInd);
-                campus.agregarProfesor(*profesor[i]);
+            //Agregar clases a un estudiante
+            else if(op==2){
+                op = 0;
+                int auxMatricula, auxClases;
+                string auxNombre;
+                system("cls");
+                cout << "Por favor ingrese la matricula del estudiante al que agregara clases:" << endl;
+                cout << "Recordar que las matriculas empiezan en 0" << endl;
+                cout<<"A";
+                cin>>auxMatricula;
+                system("cls");
+                cout<<"Estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
+                cout<<"Por favor ingrese la cantidad de clases que va agregar:"<<endl;
+                cin>>auxClases;
+                cout<<"Ingrese las clases que desea agregar:"<<endl;
+                for(int i=0;i<auxClases;i++){
+                    cin>>auxNombre;
+                    estudiantes[auxMatricula]->agregarClases(auxNombre);
+                }
+                estudiantes[auxMatricula]->mostrarClases();
+                cout<<"Clases registradas"<<endl;
+                system("pause");
             }
-            cout<<"Profesores registrados"<<endl;
-            system("pause");
+
+            //Mostrar estudiantes
+            else if(op==3){
+                op = 0;
+                system("cls");
+                campus.mostrarEstudiantes();
+                system("pause");
+            }
+
+            //Regresar al menu principal
+            else if(op==4){op=0;}
         }
 
+        //Administrar profesores
+        else if(op==2) {
+            op = 0;
+            system("cls");
+            cout << "Por favor ingrese la opcion que desee realizar" << endl;
+            cout << "1.- Agregar profesores" << endl;
+            cout << "2.- Agregar clases a un profesor" << endl;
+            cout << "3.- Mostrar profesores" << endl;
+            cout << "4.- Regresar al menu principal"<< endl;
+            op = 0;
+            cin>>op;
+
+                if(op==1){
+                    op = 0;
+                    system("cls");
+                    cout<<"Por favor ingrese el numero de profesores que agregara"<<endl;
+                    int auxProf;
+                    cin>>auxProf;
+                    cout<<"Ingrese los datos de los profesores"<<endl;
+                    for(int i=0;i<auxProf;i++){
+                        string nom, ciudad;
+                        int age, salarioInd;
+                        cout<<"Nombre"<<endl;cin>>nom;
+                        cout<<"Edad"<<endl;cin>>age;
+                        cout<<"Ciudad"<<endl;cin>>ciudad;
+                        cout<<"Salario"<<endl;cin>>salarioInd;
+                        profesores[i] = new Profesor(nom, age, ciudad, salarioInd);
+                        campus.agregarProfesor(*profesores[i]);
+                        }
+                    cout<<"Profesores registrados"<<endl;
+                    system("pause");
+                }
+
+                else if(op==2){
+                    op = 0;
+                    int auxMatricula, auxClases;
+                    string auxNombre;
+                    system("cls");
+                    cout << "Por favor ingrese la matricula del profesor al que agregara clases:" << endl;
+                    cout << "Recordar que las matriculas empiezan en 0" << endl;
+                    cout<<"P";
+                    cin>>auxMatricula;
+                    system("cls");
+                    profesores[auxMatricula]->getNombre();
+                    cout<<"Por favor ingrese la cantidad de clases que va agregar:"<<endl;
+                    cin>>auxClases;
+                    cout<<"Ingrese las clases que desea agregar:"<<endl;
+                    for(int i=0;i<auxClases;i++){
+                        cin>>auxNombre;
+                        profesores[auxMatricula]->agregarClases(auxNombre);
+                    }
+                    cout<<"Clases registradas"<<endl;
+                    system("pause");
+                }
+
+                else if(op==3){
+                    op = 0;
+                    system("cls");
+                    campus.mostrarProfesores();
+                    system("pause");
+                }
+
+                else if(op==4){op=0;}
+        }
+
+        //Administrar empleados
         else if(op==3){
             system("cls");
-            cout<<"Por favor ingrese el numero de empleados que agregara"<<endl;
-            int auxEmpl;
-            cin >> auxEmpl;
-            cout<<"Ingrese los datos de los empleados"<<endl;
-            for(int i=0; i < auxEmpl; i++){
-                int age, salarioInd;
-                string nom, ciudad, rol, uniforme;
-                cout<<"Nombre"<<endl;cin>>nom;
-                cout<<"Edad"<<endl;cin>>age;
-                cout<<"Ciudad"<<endl;cin>>ciudad;
-                cout<<"Salario"<<endl;cin>>salarioInd;
-                cout<<"Rol"<<endl;cin>>rol;
-                cout<<"Uniforme"<<endl;cin>>uniforme;
-                Empleado *empleado[i];
-                empleado[i] = new Empleado(nom, age, ciudad, salarioInd, rol, uniforme);
-                campus.agregarEmpleado(*empleado[i]);
-            }
-            cout<<"Empleados registrados"<<endl;
-            system("pause");
+            cout << "Por favor ingrese la opcion que desee realizar" << endl;
+            cout << "1.- Agregar empleados" << endl;
+            cout << "2.- Mostrar empleados" << endl;
+            cout << "3.- Regresar al menu principal"<< endl;
+            op = 0;
+            cin>>op;
         }
+            if(op==1){
+                op = 0;
+                system("cls");
+                cout<<"Por favor ingrese el numero de empleados que agregara"<<endl;
+                int auxEmpl;
+                cin >> auxEmpl;
+                cout<<"Ingrese los datos de los empleados"<<endl;
+                for(int i=0; i < auxEmpl; i++){
+                    int age, salarioInd;
+                    string nom, ciudad, rol, uniforme;
+                    cout<<"Nombre"<<endl;cin>>nom;
+                    cout<<"Edad"<<endl;cin>>age;
+                    cout<<"Ciudad"<<endl;cin>>ciudad;
+                    cout<<"Salario"<<endl;cin>>salarioInd;
+                    cout<<"Rol"<<endl;cin>>rol;
+                    cout<<"Uniforme"<<endl;cin>>uniforme;
+                    Empleado *empleado[i];
+                    empleado[i] = new Empleado(nom, age, ciudad, salarioInd, rol, uniforme);
+                    campus.agregarEmpleado(*empleado[i]);
+                }
+                cout<<"Empleados registrados"<<endl;
+                system("pause");
+            }
 
+            else if(op==2){
+                op = 0;
+                system("cls");
+                campus.mostrarEmpleados();
+                system("pause");
+            }
+
+            else if(op==3){}
+
+        //Mostrar todas las personas registradas en el campus
         else if(op==4){
             system("cls");
-            cout<<"Personas registradas en el sistema"<<endl;
             campus.mostrarPersonas();
             system("pause");
-        }
+            }
 
-        else if(op==5){
-            system("cls");
-            cout<<"Estudiantes registrados en el sistema:"<<endl;
-            campus.mostrarEstudiantes();
-            system("pause");
-        }
-
-        else if(op==6){
-            system("cls");
-            cout<<"Profesores registrados en el sistema:"<<endl;
-            campus.mostrarProfesores();
-            system("pause");
-        }
-
-        else if(op==7){
-            system("cls");
-            cout<<"Empleados registrados en el sistema:"<<endl;
-            campus.mostrarEmpleados();
-            cout<<endl;
-            system("pause");
-        }
-
-        else if(op==8) {
+        //Salir
+        else if(op==5) {
             menu = false;
         }
     }
-
-
-/*    cout<<"Estudiantes: "<<endl;cin>>numEstudiantes;
-    cout<<"Profesores: "<<endl;cin>>numProfesores;
-    cout<<"Empleados: "<<endl;cin>>numEmpleados;
-
-    Campus campus("Queretaro");
-
-    for(int i = 0;i<numEstudiantes;i++) {
-        Estudiante *estudiante[i];
-        estudiante[i] = new Estudiante("daniel", 18, "ITC", false);
-        campus.agregarEstudiante(*estudiante[i]);
-    }
-    campus.mostrarEstudiantes();*/
-
-/*    Estudiante daniel("Daniel", 18, "Queretaro", "ITC", true, 0.7);
-    daniel.agregarClases("espanol");
-    Estudiante ricardo("Ricardo", 18, "IRS", false);
-    ricardo.setLugar("CDMX");
-    Estudiante galo("Galo", 19, "IRS", false);
-
-    Campus qro("Queretaro");
-
-
-
-    qro.agregarEstudiante(ricardo);
-    qro.agregarEstudiante(galo);
-    qro.agregarEstudiante(daniel);
-    qro.mostrarEstudiantes();*/
-
-/*    Profesor benji("Benji", 35, 4000);
-    benji.setSalario(1);
-    benji.setLugar("Sonora");
-    benji.agregarClases("OOP");
-    benji.agregarClases("IOT");
-
-    Empleado ezzat("Ezzat", 18, 150, "cajero", "playera azul");
-    ezzat.setLugar("veracruz");*/
-
-
-/*    Campus *qro;
-    qro = new Campus("Queretaro");
-    qro -> getNombre();
-    cout<<"\n";
-
-    qro ->agregarEstudiante(daniel);
-    qro ->agregarEstudiante(ricardo);
-    qro ->agregarEstudiante((galo));
-    qro ->mostrarEstudiantes();
-    qro->getTotalEstudiantes();*/
-
-/*    qro ->agregarProfesor(benji);
-    qro ->mostrarProfesores();
-    qro -> getTotalProfesores();
-
-    qro ->agregarEmpleado(ezzat);
-    qro ->mostrarEmpleados();
-    qro ->getTotalEmpleados();*/
-
-
-
 
     return 0;
 }
