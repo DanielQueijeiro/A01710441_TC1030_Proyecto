@@ -86,13 +86,18 @@ int main() {
                         cin >> becaPorc;
                     } else { becaPorc = 0; }
 
-                    //Creamos los estudiantes
-                    estudiantes[i] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
-                    //Los agregamos al campus
-                    campus.agregarEstudiante(*estudiantes[i]);
-                    cout<<endl;
+                    if(becaPorc<0 || becaPorc == -0){
+                        cout<<"Valor de beca invalido, ingrese valor positivo"<<endl;
+                    }
+                    else {
+                        //Creamos los estudiantes
+                        estudiantes[i] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
+                        //Los agregamos al campus
+                        campus.agregarEstudiante(*estudiantes[i]);
+                        cout << endl;
+                        cout << "Estudiantes registrados" << endl;
+                    }
                 }
-                cout << "Estudiantes registrados" << endl;
                 system("pause");
             }
 
@@ -132,6 +137,7 @@ int main() {
                     //Usamos método de Estudiante para mostrar el total de clases que el alumno tiene
                     estudiantes[auxMatricula]->mostrarClases();
                 }
+                else{cout<<"Opcion no valida"<<endl;}
                 system("pause");
             }
 
@@ -222,6 +228,7 @@ int main() {
                         //Usamos método de Profesor para mostrar el total de clases que el profesor tiene
                         profesores[auxMatricula]->mostrarClases();
                     }
+                    else{cout<<"Opcion no valida"<<endl;}
                     system("pause");
                 }
 
