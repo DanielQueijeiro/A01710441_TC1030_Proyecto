@@ -1,6 +1,12 @@
-//
-// Created by Daniel Queijeiro on 18/05/2023.
-//
+/*
+    Created by Daniel Queijeiro A01710441 on 18/05/2023.
+    Esta clase abstracta nos servira para definir al objeto Persona,
+    de la cuál crearemos las clases hijas: Estudiante, Profesor, y Empleado.
+    La clase tendrá atributos básicos que cualquier persona tiene:
+    Nombre, edad, y lugar natal.
+    Al igual que tendrá métodos para acceder a esos datos.
+    Y un método con el que podremos aplicar polimorfismo.
+*/
 #ifndef PERSONAS_H
 #define PERSONAS_H
 
@@ -10,46 +16,24 @@
 using namespace std;
 
 class Personas {
-private:
+private: //Atributos
     string nombre;
     int edad;
     string lugarNatal;
 
-public:
-    Personas(){}
-    Personas(string nom, int age);
-    Personas(string nom, int age, string lugar);
-    void setNombre(string nom);
-    void setEdad(int age);
-    void setLugar(string lugar);
+public: //Métodos
+    Personas(){}//Constructor base
+    Personas(string nom, int age, string lugar);//Constructor
     string getNombre();
     int getEdad();
     string getLugar();
     virtual void mostrarInfo()=0;
 };
 
-//Constructores
-Personas::Personas(string nom, int age){
-    nombre = nom;
-    edad = age;
-    lugarNatal = "No hay lugar natal registrado";
-}
+//Definimos constructores
 Personas::Personas(string nom, int age, string lugar) {
     nombre = nom;
     edad = age;
-    lugarNatal = lugar;
-}
-
-//Setters
-void Personas::setNombre(string nom) {
-    nombre = nom;
-}
-
-void Personas::setEdad(int age) {
-    edad = age;
-}
-
-void Personas::setLugar(string lugar) {
     lugarNatal = lugar;
 }
 
@@ -66,6 +50,7 @@ string Personas::getLugar() {
     return lugarNatal;
 }
 
+//Método para polimorfismo
 void Personas::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
     cout<<"Lugar: "<<getLugar()<<"\n\n";
@@ -73,9 +58,15 @@ void Personas::mostrarInfo() {
 
 
 
-//Clase hija Estudiante
+/*
+    Clase hija Estudiante
+    Esta clase tendra atributos adicionales que puede tener un estudiante:
+    carrera, beca, porcentaje de beca, un arreglo con sus clases, número de clases.
+    Y tendrá métodos que permitan obtener información del estudiante
+    al igual que métodos para añadirle clases al alumno, y calcular su pago de colegiatura.
+*/
 class Estudiante : public Personas{
-    private:
+    private://Atributos
         string carrera;
         bool beca;
         float porcBeca;
@@ -83,22 +74,19 @@ class Estudiante : public Personas{
         int numClases;
         int *ptr_numClases = &numClases;
 
-    public:
-        Estudiante(): Personas(){}
+    public://Métodos
+        Estudiante(): Personas(){}//Constructor base
 
+        //Constructor
         Estudiante(string nom, int age, string ciudad, string career, bool apoyo, float becaPorc): Personas(nom, age, ciudad){
             carrera = career;
             beca = apoyo;
             porcBeca = becaPorc;
         }
-        void setCarrera(string career);
-        void setBeca(bool apoyo);
-        void setPorcBeca(float becaPorc);
 
         string getCarrera();
         string getBeca();
         float getPorcBeca();
-        int getClases();
 
         void agregarClases(string claseInd);
         float obtenerColegiatura();
@@ -106,6 +94,7 @@ class Estudiante : public Personas{
         void mostrarInfo();
 };
 
+//Getters
 string Estudiante::getCarrera() {
     return carrera;
 }
@@ -128,27 +117,18 @@ float Estudiante::getPorcBeca() {
     }
 }
 
-int Estudiante::getClases(){
-    return numClases;
-}
-
-void Estudiante::setCarrera(string career) {
-    carrera = career;
-}
-
-void Estudiante::setBeca(bool apoyo) {
-    beca = apoyo;
-}
-
-void Estudiante::setPorcBeca(float becaPorc) {
-    porcBeca = becaPorc;
-}
-
+/*Método para agregar clases al estudiante
+ * Aquí es importante señalar el uso de apuntadores para aumentar numClases, porque en caso de no usar apuntadores
+ * estaríamos creando una variable temporal y no realmente aumentando el valor de numClases, lo cual ocasionaria problemas
+ * con otros métodos que ocupan numClases.
+*/
 void Estudiante::agregarClases(string claseInd) {
     clases[numClases] = claseInd;
     *ptr_numClases = *ptr_numClases+1;
 }
 
+//Método para calcular colegiatura
+//Igual usamos el apuntador para acceder al valor de numClases
 float Estudiante::obtenerColegiatura() {
     //Costo de clase $8,105
     if(*ptr_numClases==0){return 0;}
@@ -158,6 +138,7 @@ float Estudiante::obtenerColegiatura() {
     }
 }
 
+//Método para mostrar todas las clases registradas del alumno
 void Estudiante::mostrarClases() {
     cout<<"Las clases registradas son: "<<endl;
     for(int i; i<*ptr_numClases; i++){
@@ -165,6 +146,7 @@ void Estudiante::mostrarClases() {
     }
 }
 
+//Método de polimorfismo donde se muestra la información básica y única de la clase estudiante.
 void Estudiante::mostrarInfo() {
     cout << "Nombre: " << getNombre() << "\n" << "Edad: " << getEdad() << "\n";
     cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
@@ -183,17 +165,24 @@ void Estudiante::mostrarInfo() {
 
 
 
-//Clase hija Profesor
+/*
+    Clase hija Profesor
+    Esta clase tendra atributos adicionales que puede tener un profesor:
+    un arreglo con sus clases, número de clases, y un salario por clase.
+    Y tendrá métodos que permitan obtener información del profesor
+    al igual que métodos para añadirle clases al profesor, y calcular su salario total.
+*/
 class Profesor: public Personas {
-private:
+private://Atributos
     string clases[10];
     int numClases;
     int *ptr_numClases = &numClases;
     int salarioClase;
 
-public:
-    Profesor(): Personas(){};
+public://Métodos
+    Profesor(): Personas(){};//Constructor base
 
+    //Constructor
     Profesor(string nom, int age, string ciudad, int salarioInd) : Personas(nom, age, ciudad) {
         numClases = 0;
         salarioClase = salarioInd;
@@ -206,24 +195,28 @@ public:
 
 };
 
+//Método para agregar clases al profesor
 void Profesor::agregarClases(string claseInd) {
     clases[numClases] = claseInd;
     *ptr_numClases = *ptr_numClases+1;
 }
 
+//Método para mostrar todas las clases del profesor
 void Profesor::mostrarClases() {
-    cout<<"Las clases registradas son: ";
+    cout<<"Las clases registradas son: "<<endl;
     for(int i; i<numClases; i++){
         cout<<clases[i]<<endl;
     }
     cout<<"\n";
 }
 
+//Método para calcular el salario total del profesor dependiendo de clases registradas
 int Profesor::obtenerSalario() {
     int salarioTotal = *ptr_numClases*salarioClase;
     return salarioTotal;
 }
 
+//Método de polimorfismo donde se muestra la información básica y única de la clase profesor
 void Profesor::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
     cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<*ptr_numClases<<"\n";
@@ -232,16 +225,23 @@ void Profesor::mostrarInfo() {
 
 
 
-//Clase hija Empleado
+/*
+    Clase hija Empleado
+    Esta clase tendra atributos adicionales que puede tener un empleado:
+    un salario mensual, uniforme y rol a cumplir.
+    Y tendrá métodos que permitan obtener información del empleado
+    al igual que métodos para mostrar su información y su salario.
+*/
 class Empleado:public Personas{
-    private:
+    private://Atributos
         int salarioMensual;
         string uniforme;
         string rol;
 
-    public:
-        Empleado(): Personas(){};
+    public://Métodos
+        Empleado(): Personas(){};//Constructor base
 
+        //Constructor
         Empleado(string nom, int age, string ciudad, int salarioInd, string role, string uniform): Personas(nom, age, ciudad){
             salarioMensual = salarioInd;
             uniforme = uniform;
@@ -251,10 +251,11 @@ class Empleado:public Personas{
 
     string getUniforme();
     string getRol();
-    int obtenerSalario();
+    int getSalario();
     void mostrarInfo();
 };
 
+//Getters
     string Empleado::getUniforme(){
         return uniforme;
     }
@@ -263,14 +264,15 @@ class Empleado:public Personas{
         return rol;
     }
 
-    int Empleado::obtenerSalario(){
+    int Empleado::getSalario(){
         return salarioMensual;
     }
 
+//Método de polimorfismo donde se muestra la información básica y única de la clase empleado.
     void Empleado::mostrarInfo() {
         cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
         cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Rol: "<<getRol()<<"\n";
-        cout<<"Uniforme: "<<getUniforme()<<"\n"<<"Salario mensual: "<<obtenerSalario()<<"\n\n";
+        cout<<"Uniforme: "<<getUniforme()<<"\n"<<"Salario mensual: "<<getSalario()<<"\n\n";
     }
 
 #endif //PERSONAS_H
