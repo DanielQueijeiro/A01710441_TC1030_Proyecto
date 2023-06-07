@@ -20,6 +20,7 @@ Consta de un menu con las opciones iniciales y corre sobre consola.
 - En caso de intentar añadir clases a estudiante o profesor un valor que no sea númerico.
 - En caso de intentar ingresar un número total de Personas en un Campus como negativo.
 - En caso de ingresar valores de tipo erroneo al crear una persona.
+- En caso de intentar buscar información de una matrícula no registrada.
 
 ### Consideraciones
 El programa solo corre en la consola y esta hecho con c++ standard por lo que corre en todos los sistemas operativos
