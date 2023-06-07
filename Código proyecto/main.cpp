@@ -51,7 +51,7 @@ int main() {
             system("cls");
             cout << "Por favor ingrese la opcion que desee realizar" << endl;
             cout << "1.- Agregar estudiantes" << endl;
-            cout << "2.- Agregar clases a un estudiante" << endl;
+            cout << "2.- Agregar o mostrar clases de un estudiante" << endl;
             cout << "3.- Mostrar estudiantes" << endl;
             cout << "4.- Regresar al menu principal"<< endl;
             op = 0;
@@ -96,30 +96,42 @@ int main() {
                 system("pause");
             }
 
-            //Agregar clases a un estudiante
+            //Mostrar o agregar clases a un estudiante
             else if(op==2){
                 op = 0;
-                int auxMatricula, auxClases;
+                int auxMatricula, auxClases, auxOp;
                 string auxNombre;
                 system("cls");
-                cout << "Por favor ingrese la matricula del estudiante al que agregara clases:" << endl;
+                cout << "Por favor ingrese la matricula del estudiante al que desea seleccionar:" << endl;
                 cout << "Recordar que las matriculas empiezan en 0" << endl;
                 cout<<"A";
                 //La variable nos servira para buscar al estudiante que se desea
                 cin>>auxMatricula;
                 system("cls");
+                //Usamos método de clase Estudiante para obtener el nombre
                 cout<<"Estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
-                cout<<"Por favor ingrese la cantidad de clases que va agregar:"<<endl;
-                cin>>auxClases;
-                cout<<"Ingrese las clases que desea agregar:"<<endl;
-                //Ciclo para agregar todas las clases
-                for(int i=0;i<auxClases;i++){
-                    cin>>auxNombre;
-                    //Usamos método de Estudiante para agregar clases
-                    estudiantes[auxMatricula]->agregarClases(auxNombre);
+                cout<<"Desea agregar o mostrar clases? (Agregar = 0, Mostrar = 1)"<<endl;
+                cin>>auxOp;
+                if(auxOp==0) {
+                    system("cls");
+                    cout<<"Estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
+                    cout << "Por favor ingrese la cantidad de clases que va agregar:" << endl;
+                    cin >> auxClases;
+                    cout << "Ingrese las clases que desea agregar:" << endl;
+                    //Ciclo para agregar todas las clases
+                    for (int i = 0; i < auxClases; i++) {
+                        cin >> auxNombre;
+                        //Usamos método de Estudiante para agregar clases
+                        estudiantes[auxMatricula]->agregarClases(auxNombre);
+                    }
+                    cout<<"Clases registradas"<<endl;
                 }
-                //Usamos método de Estudiante para mostrar el total de clases que el alumno tiene
-                estudiantes[auxMatricula]->mostrarClases();
+                else if(auxOp == 1){
+                    system("cls");
+                    cout<<"Clases registradas del estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
+                    //Usamos método de Estudiante para mostrar el total de clases que el alumno tiene
+                    estudiantes[auxMatricula]->mostrarClases();
+                }
                 system("pause");
             }
 
@@ -141,7 +153,7 @@ int main() {
             system("cls");
             cout << "Por favor ingrese la opcion que desee realizar" << endl;
             cout << "1.- Agregar profesores" << endl;
-            cout << "2.- Agregar clases a un profesor" << endl;
+            cout << "2.- Agregar o mostrar clases de un profesor" << endl;
             cout << "3.- Mostrar profesores" << endl;
             cout << "4.- Regresar al menu principal"<< endl;
             op = 0;
@@ -175,10 +187,10 @@ int main() {
                     system("pause");
                 }
 
-                //Agregar clases al profesor
+                //Agregar o mostrar clases del profesor
                 else if(op==2){
                     op = 0;
-                    int auxMatricula, auxClases;
+                    int auxMatricula, auxClases, auxOp;
                     string auxNombre;
                     system("cls");
                     cout << "Por favor ingrese la matricula del profesor al que agregara clases:" << endl;
@@ -188,17 +200,28 @@ int main() {
                     system("cls");
                     //Obtenemos el nombre del profesor con un método de su clase
                     profesores[auxMatricula]->getNombre();
-                    cout<<"Por favor ingrese la cantidad de clases que va agregar:"<<endl;
-                    cin>>auxClases;
-                    cout<<"Ingrese las clases que desea agregar:"<<endl;
-                    //Ciclo para agregar todas las clases
-                    for(int i=0;i<auxClases;i++){
-                        cin>>auxNombre;
-                        //Agregamos clases con método de Profesor
-                        profesores[auxMatricula]->agregarClases(auxNombre);
+                    cout<<"Desea agregar o mostrar clases? (Agregar = 0, Mostrar = 1)"<<endl;
+                    cin>>auxOp;
+                    if(auxOp==0) {
+                        system("cls");
+                        cout<<"Profesor: "<<profesores[auxMatricula]->getNombre()<<endl;
+                        cout << "Por favor ingrese la cantidad de clases que va agregar:" << endl;
+                        cin >> auxClases;
+                        cout << "Ingrese las clases que desea agregar:" << endl;
+                        //Ciclo para agregar todas las clases
+                        for (int i = 0; i < auxClases; i++) {
+                            cin >> auxNombre;
+                            //Usamos método de Profesor para agregar clases
+                            profesores[auxMatricula]->agregarClases(auxNombre);
+                        }
+                        cout<<"Clases registradas"<<endl;
                     }
-                    //Mostramos todas las clases del profesor con un método de su clase
-                    profesores[auxMatricula]->mostrarClases();
+                    else if(auxOp == 1){
+                        system("cls");
+                        cout<<"Clases registradas del profesor: "<<profesores[auxMatricula]->getNombre()<<endl;
+                        //Usamos método de Profesor para mostrar el total de clases que el profesor tiene
+                        profesores[auxMatricula]->mostrarClases();
+                    }
                     system("pause");
                 }
 

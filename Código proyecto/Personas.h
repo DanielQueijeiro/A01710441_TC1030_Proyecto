@@ -140,9 +140,13 @@ float Estudiante::obtenerColegiatura() {
 
 //Método para mostrar todas las clases registradas del alumno
 void Estudiante::mostrarClases() {
-    cout<<"Las clases registradas son: "<<endl;
-    for(int i; i<*ptr_numClases; i++){
-        cout<<clases[i]<<endl;
+    if(*ptr_numClases==0){
+        cout<<"El estudiante no esta registrado en ninguna clase"<<endl;
+    }
+    else {
+        for (int i; i < *ptr_numClases; i++) {
+            cout << clases[i] << endl;
+        }
     }
 }
 
@@ -203,11 +207,14 @@ void Profesor::agregarClases(string claseInd) {
 
 //Método para mostrar todas las clases del profesor
 void Profesor::mostrarClases() {
-    cout<<"Las clases registradas son: "<<endl;
-    for(int i; i<numClases; i++){
-        cout<<clases[i]<<endl;
+    if(*ptr_numClases==0){
+        cout<<"El profesor no esta registrado en ninguna clase"<<endl;
     }
-    cout<<"\n";
+    else {
+        for (int i; i < *ptr_numClases; i++) {
+            cout << clases[i] << endl;
+        }
+    }
 }
 
 //Método para calcular el salario total del profesor dependiendo de clases registradas
