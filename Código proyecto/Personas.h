@@ -81,6 +81,7 @@ class Estudiante : public Personas{
         float porcBeca;
         string clases[10];
         int numClases;
+        int *ptr_numClases = &numClases;
 
     public:
         Estudiante(): Personas(){}
@@ -89,7 +90,6 @@ class Estudiante : public Personas{
             carrera = career;
             beca = apoyo;
             porcBeca = becaPorc;
-            numClases = 0;
         }
         void setCarrera(string career);
         void setBeca(bool apoyo);
@@ -146,32 +146,34 @@ void Estudiante::setPorcBeca(float becaPorc) {
 
 void Estudiante::agregarClases(string claseInd) {
     clases[numClases] = claseInd;
-    numClases++;
+    *ptr_numClases = *ptr_numClases+1;
 }
 
 float Estudiante::obtenerColegiatura() {
     //Costo de clase $8,105
-    if(numClases==0){return 0;}
+    if(*ptr_numClases==0){return 0;}
     else{
-        float totalColegiatura = (numClases * 8105)*(1-porcBeca);
+        float totalColegiatura = (*ptr_numClases * 8105)*(1-porcBeca);
         return totalColegiatura;
     }
 }
 
 void Estudiante::mostrarClases() {
-    cout<<"Las clases registradas son: ";
-    for(int i; i<numClases; i++){
+    cout<<"Las clases registradas son: "<<endl;
+    for(int i; i<*ptr_numClases; i++){
         cout<<clases[i]<<endl;
-        cout<<numClases<<endl;
     }
 }
 
 void Estudiante::mostrarInfo() {
     cout << "Nombre: " << getNombre() << "\n" << "Edad: " << getEdad() << "\n";
     cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
-    cout << "Clases inscritas: " << numClases << "\n";
-    cout << getBeca() << "\n" << "Porcentaje de beca: " << getPorcBeca() << "\n";
-    if (numClases == 0) {
+    cout << "Clases inscritas: " << *ptr_numClases << "\n";
+    cout << getBeca() << "\n";
+    if(beca){
+        cout<<"Porcentaje de beca: " << getPorcBeca() << "\n";
+    }
+    if (*ptr_numClases == 0) {
         cout<<"No hay clases registradas, no se puede calcular el pago mensual \n";
     }
     else {
@@ -186,6 +188,7 @@ class Profesor: public Personas {
 private:
     string clases[10];
     int numClases;
+    int *ptr_numClases = &numClases;
     int salarioClase;
 
 public:
@@ -200,35 +203,30 @@ public:
     void mostrarClases();
     int obtenerSalario();
     void mostrarInfo();
-    void setSalario(int salarioInd);
 
 };
 
-void Profesor::setSalario(int salarioInd) {
-    salarioClase = salarioInd;
-}
-
 void Profesor::agregarClases(string claseInd) {
     clases[numClases] = claseInd;
-    numClases++;
+    *ptr_numClases = *ptr_numClases+1;
 }
 
 void Profesor::mostrarClases() {
     cout<<"Las clases registradas son: ";
     for(int i; i<numClases; i++){
-        cout<<clases[i]<<"  ";
+        cout<<clases[i]<<endl;
     }
     cout<<"\n";
 }
 
 int Profesor::obtenerSalario() {
-    int salarioTotal = numClases*salarioClase;
+    int salarioTotal = *ptr_numClases*salarioClase;
     return salarioTotal;
 }
 
 void Profesor::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
-    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<numClases<<"\n";
+    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<*ptr_numClases<<"\n";
     cout<<"Salario mensual: "<<obtenerSalario()<<"\n\n";
 }
 
@@ -240,7 +238,6 @@ class Empleado:public Personas{
         int salarioMensual;
         string uniforme;
         string rol;
-        int horas;
 
     public:
         Empleado(): Personas(){};
@@ -251,17 +248,12 @@ class Empleado:public Personas{
             rol = role;
         }
 
-    void setUniforme(string uniform);
-    void setSalarioMensual(int salarioInd);
+
     string getUniforme();
     string getRol();
     int obtenerSalario();
     void mostrarInfo();
 };
-
-    void Empleado::setUniforme(string uniform){
-        uniforme = uniform;
-    }
 
     string Empleado::getUniforme(){
         return uniforme;

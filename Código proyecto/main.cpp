@@ -58,7 +58,7 @@ int main() {
                 cout << "Ingrese los datos de los alumnos" << endl;
                 for (int i = 0; i < auxEst; i++) {
                     string nom, ciudad, career, auxApoyo;
-                    int age, _numclases;
+                    int age;
                     bool apoyo;
                     float becaPorc;
                     cout << "Nombre" << endl;cin >> nom;
@@ -70,12 +70,13 @@ int main() {
                         apoyo = true;
                     } else { apoyo = false; }
                     if (apoyo == true) {
-                        cout << "Porc beca" << endl;
+                        cout << "Porcentaje de beca (En decimales)" << endl;
                         cin >> becaPorc;
                     } else { becaPorc = 0; }
 
                     estudiantes[i] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
                     campus.agregarEstudiante(*estudiantes[i]);
+                    cout<<endl;
                 }
                 cout << "Estudiantes registrados" << endl;
                 system("pause");
@@ -101,7 +102,6 @@ int main() {
                     estudiantes[auxMatricula]->agregarClases(auxNombre);
                 }
                 estudiantes[auxMatricula]->mostrarClases();
-                cout<<"Clases registradas"<<endl;
                 system("pause");
             }
 
@@ -168,7 +168,7 @@ int main() {
                         cin>>auxNombre;
                         profesores[auxMatricula]->agregarClases(auxNombre);
                     }
-                    cout<<"Clases registradas"<<endl;
+                    profesores[auxMatricula]->mostrarClases();
                     system("pause");
                 }
 
