@@ -19,9 +19,9 @@ class Campus{
         int matriculaEst;
         int matriculaProf;
         int emplID;
-        Estudiante arrEstudiantes[1000];
-        Profesor arrProfesores[1000];
-        Empleado arrEmpleados[1000];
+        Estudiante arrEstudiantes[100];
+        Profesor arrProfesores[100];
+        Empleado arrEmpleados[100];
 
     public://Métodos
         Campus(){//Constructor base
