@@ -11,15 +11,14 @@ El programa solo permite:
 - Ingreso de nuevos integrantes de la comunidad Tec.
 - Obtener información sobre cualquier persona registrada en el sistema. 
 - El cálculo de diferentes tipos de sueldos: Sueldo por clase para profesores, y sueldo por hora a empleados.
-- El cálculo de colegiatura para estudiantes según el porcentaje de beca que tengan.
+- El cálculo de colegiatura para estudiantes según la cantidad de clases y el porcentaje de beca que tengan.
 
 Consta de un menu con las opciones iniciales y corre sobre consola.
 
 ### Limitaciones (Casos que harían que el programa deje de funcionar)
-- En caso de intentar añadir personas al campus un valor que no sea númerico a campus.
-- En caso de intentar añadir clases a estudiante o profesor un valor que no sea númerico.
-- En caso de intentar ingresar un número total de Personas en un Campus como negativo.
-- En caso de ingresar valores de tipo erroneo al crear una persona.
+- En caso de ingresar valores de tipo erroneo.
+- En caso de intentar añadir personas al campus un valor negativo.
+- En caso de intentar añadir clases a estudiante o profesor un valor negativo.
 - En caso de intentar buscar información de una matrícula no registrada.
 
 ### Consideraciones
