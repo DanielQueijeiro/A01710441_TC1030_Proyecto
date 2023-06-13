@@ -1,22 +1,15 @@
 /*
     Created by Daniel Queijeiro A01710441 on 26/05/2023.
     En el main podremos crear nuestro campus para poder empezar a añadir personas
-    y administrarlas. Ya sea añadiendo clases o calculando salarios.
-    También podremos ver la información de cada persona registrada en el sistema.
+    y administrarlas.
 */
 #include <iostream>
-#include <zconf.h>
 #include "Campus.h"//Incluimos el archivo Campus.h para trabajar
 //con nuestras clases Campus, personas, estudiante, profesor y empleado.
 
-
 using namespace std;
 
-
 int main() {
-    //Definimos nuestros arreglos de tipo estudiante, profesor, y empleado
-    //Usamos apuntadores para poder emplear polimorfismo
-
     //Definimos nuestras variables
     int op;
     string nomCampus;
@@ -25,7 +18,7 @@ int main() {
     //Damos la bienvenida al usuario y solicitamos nombre para crear al campus
     cout<<"Bienvenido al sistema del Tec"<<endl;
     cout<<"Por favor ingrese el campus que se va a administrar"<<endl;
-    cin>>nomCampus;
+    getline(cin,nomCampus);
     Campus campus(nomCampus);
 
     //Empezamos menu
@@ -65,11 +58,13 @@ int main() {
                 for (int i = 0; i < auxEst; i++) {
                     string nom,ciudad, rol="estudiante";
                     int age;
-                    //Solicitamos los datos requeridos para crear un alumno
-                    cout << "Nombre" << endl;cin >> nom;
+                    //Solicitamos los datos requeridos para crear una persona
+                    cin.ignore();
+                    cout << "Nombre" << endl;getline(cin,nom);
                     cout << "Edad" << endl;cin >> age;
-                    cout << "Ciudad" << endl;cin >> ciudad;
-                        //Los agregamos al campus
+                    cin.ignore();
+                    cout << "Ciudad" << endl;getline(cin,ciudad);
+                        //Usamos el metodo agregarPersonas
                         campus.agregarPersonas(rol,nom, age, ciudad);
                         cout << endl;
                         cout << "Estudiantes registrados" << endl;
@@ -135,11 +130,13 @@ int main() {
                     for(int i=0;i<auxProf;i++){
                         string nom, ciudad, rol="profesor";
                         int age;
-                        //Solicitamos información para crear un profesor
-                        cout<<"Nombre"<<endl;cin>>nom;
-                        cout<<"Edad"<<endl;cin>>age;
-                        cout<<"Ciudad"<<endl;cin>>ciudad;
-                        //Los agregamos al campus
+                        //Solicitamos información para crear una persona
+                        cin.ignore();
+                        cout << "Nombre" << endl;getline(cin,nom);
+                        cout << "Edad" << endl;cin >> age;
+                        cin.ignore();
+                        cout << "Ciudad" << endl;getline(cin,ciudad);
+                        //Usamos el metodo agregarPersonas
                         campus.agregarPersonas(rol,nom, age, ciudad);
                         }
                     cout<<"Profesores registrados"<<endl;
@@ -198,16 +195,15 @@ int main() {
                 cin >> auxEmpl;
                 cout << "Ingrese los datos de los empleados" << endl;
                 for (int i = 0; i < auxEmpl; i++) {
-                    //Creamos empleado
+                    //Solicitamos información para crear una persona
                     string nom, ciudad, rol = "empleado";
                     int age;
-                    cout << "Nombre" << endl;
-                    cin >> nom;
-                    cout << "Edad" << endl;
-                    cin >> age;
-                    cout << "Ciudad" << endl;
-                    cin >> ciudad;
-                    //Lo agregamos al campus
+                    cin.ignore();
+                    cout << "Nombre" << endl;getline(cin,nom);
+                    cout << "Edad" << endl;cin >> age;
+                    cin.ignore();
+                    cout << "Ciudad" << endl;getline(cin,ciudad);
+                    //Usamos el metodo agregarPersonas
                     campus.agregarPersonas(rol, nom, age, ciudad);
                 }
                 cout << "Empleados registrados" << endl;
@@ -222,7 +218,7 @@ int main() {
 
             }
 
-                //Mostrar informacion de un profesor
+                //Mostrar informacion de un empleado
             else if (op == 3) {
                 op = 0;
                 int auxID;
@@ -231,13 +227,13 @@ int main() {
                 cout << "Por favor ingrese el ID del empleado al que desea seleccionar:" << endl;
                 cout << "Recordar que los ID de empleados empiezan en 200 y llegan hasta 299" << endl;
                 cout << "ID";
-                //La variable nos servira para buscar al profesor que se desea
+                //La variable nos servira para buscar al empleado que se desea
                 cin >> auxID;
                 cout << "\n\n\n\n";
                 if(auxID<200 || auxID>299) {
                     cout << "ID invalido" << endl;
                 }
-                //Usamos método de clase Profesor para obtener informacion
+                //Usamos método de clase empleado para obtener informacion
                 else {
                     cout << "ID del empleado: ID" << auxID << endl;
                     campus.mostrarInfoPersona(auxID);

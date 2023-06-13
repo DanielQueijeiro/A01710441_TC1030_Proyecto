@@ -1,12 +1,4 @@
-/*
-    Created by Daniel Queijeiro A01710441 on 18/05/2023.
-    Esta clase abstracta nos servira para definir al objeto Persona,
-    de la cuál crearemos las clases hijas: Estudiante, Profesor, y Empleado.
-    La clase tendrá atributos básicos que cualquier persona tiene:
-    Nombre, edad, y lugar natal.
-    Al igual que tendrá métodos para acceder a esos datos.
-    Y un método con el que podremos aplicar polimorfismo.
-*/
+//Created by Daniel Queijeiro A01710441 on 18/05/2023.
 #ifndef PERSONAS_H
 #define PERSONAS_H
 
@@ -15,6 +7,13 @@
 
 using namespace std;
 
+/*Esta clase abstracta nos servira para definir al objeto Persona,
+de la cuál crearemos las clases hijas: Estudiante, Profesor, y Empleado.
+La clase tendrá atributos básicos que cualquier persona tiene:
+Nombre, edad, y lugar natal.
+Al igual que tendrá métodos para acceder a esos datos.
+Y un método con el que podremos aplicar polimorfismo.
+*/
 class Personas {
 private: //Atributos
     string nombre;
@@ -27,8 +26,8 @@ public: //Métodos
     string getNombre();
     int getEdad();
     string getLugar();
-    virtual float calcularPago()=0;
-    virtual void mostrarInfo()=0;
+    virtual float calcularPago()=0;//Metodos virtuales para aplicar polimorfismo
+    virtual void mostrarInfo()=0;//Al igual que establecer la clase como abstracta
 };
 
 //Definimos constructores
@@ -52,12 +51,19 @@ string Personas::getLugar() {
 }
 
 //Método para polimorfismo
+//@param
+//@return
 void Personas::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
     cout<<"Lugar: "<<getLugar()<<"\n\n";
 }
 
-
+//Método para polimorfismo
+//@param
+//@return float
+float Personas::calcularPago() {
+    return 0;
+}
 
 /*
     Clase hija Estudiante
@@ -119,12 +125,11 @@ int Estudiante::getClases() {
     return numClases;
 }
 
-/*Método para agregar clases al estudiante
-//Método para calcular colegiatura
-Igual usamos el apuntador para acceder al valor de numClases
-*/
+//Método de polimorfismo para calcular pago de colegiatura del estudiante
+//@param
+//@return float
 float Estudiante::calcularPago() {
-    //Costo de clase $8,105
+    //Costo por clase $8,105
     if(numClases==0){return 0;}
     else{
         float totalColegiatura = (numClases * 8105)*(1-porcBeca);
@@ -134,6 +139,8 @@ float Estudiante::calcularPago() {
 
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase estudiante.
+//@param
+//@return
 void Estudiante::mostrarInfo() {
     cout << "Nombre: " << getNombre() << "\n" << "Edad: " << getEdad() << "\n";
     cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
@@ -161,15 +168,14 @@ void Estudiante::mostrarInfo() {
 */
 class Profesor: public Personas {
 private://Atributos
-    string clases[10];
     int numClases;
-    int salarioClase;
+    float salarioClase;
 
 public://Métodos
     Profesor(): Personas(){};//Constructor base
 
     //Constructor
-    Profesor(string nom, int age, string ciudad,int clases, int salarioInd) : Personas(nom, age, ciudad) {
+    Profesor(string nom, int age, string ciudad,int clases, float salarioInd) : Personas(nom, age, ciudad) {
         numClases = clases;
         salarioClase = salarioInd;
     }
@@ -179,18 +185,22 @@ public://Métodos
     void mostrarInfo();
 
 };
-
+//Getters
 int Profesor::getClases() {
     return numClases;
 }
 
-//Método para calcular el salario total del profesor dependiendo de clases registradas
+//Método de polimorfismo para calcular el salario total del profesor dependiendo de clases registradas
+//@param
+//@return float
 float Profesor::calcularPago() {
-    int salarioTotal = numClases*salarioClase;
+    float salarioTotal = numClases*salarioClase;
     return salarioTotal;
 }
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase profesor
+//@param
+//@return
 void Profesor::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
     cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<getClases()<<"\n";
@@ -202,13 +212,13 @@ void Profesor::mostrarInfo() {
 /*
     Clase hija Empleado
     Esta clase tendra atributos adicionales que puede tener un empleado:
-    un salario mensual, uniforme y Puesto a cumplir.
+    un salario mensual, uniforme y puesto a cumplir.
     Y tendrá métodos que permitan obtener información del empleado
     al igual que métodos para mostrar su información y su salario.
 */
 class Empleado:public Personas{
     private://Atributos
-        int salarioMensual;
+        float salarioMensual;
         string uniforme;
         string puesto;
 
@@ -216,7 +226,7 @@ class Empleado:public Personas{
         Empleado(): Personas(){};//Constructor base
 
         //Constructor
-        Empleado(string nom, int age, string ciudad, int salarioInd, string _puesto, string uniform): Personas(nom, age, ciudad){
+        Empleado(string nom, int age, string ciudad, float salarioInd, string _puesto, string uniform): Personas(nom, age, ciudad){
             salarioMensual = salarioInd;
             uniforme = uniform;
             puesto = _puesto;
@@ -230,23 +240,28 @@ class Empleado:public Personas{
 };
 
 //Getters
-    string Empleado::getUniforme(){
-        return uniforme;
-    }
+string Empleado::getUniforme(){
+    return uniforme;
+}
 
-    string Empleado::getPuesto() {
-        return puesto;
-    }
+string Empleado::getPuesto() {
+    return puesto;
+}
 
-    float Empleado::calcularPago(){
-        return salarioMensual;
-    }
+//Método de polimorfismo para obtener el salario mensual del empleado.
+//@param
+//@return float
+float Empleado::calcularPago(){
+    return salarioMensual;
+}
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase empleado.
-    void Empleado::mostrarInfo() {
-        cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
-        cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Puesto: "<<getPuesto()<<"\n";
-        cout<<"Uniforme: "<<getUniforme()<<"\n"<<"Salario mensual: "<<calcularPago()<<"\n\n";
-    }
+//@param
+//@return
+void Empleado::mostrarInfo() {
+    cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
+    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Puesto: "<<getPuesto()<<"\n";
+    cout<<"Salario mensual: "<<calcularPago()<<"\n\n";
+}
 
 #endif //PERSONAS_H

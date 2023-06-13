@@ -17,6 +17,7 @@ class Campus{
     private://Atributos
         string nombre;
         int matriculaEst,matriculaProf,emplID;
+        //Usamos apuntador para poder usar polimorfismo mas adelante
         Personas *arrPersonas[299];//0-99 estudiantes, 100-199 profesores, 200-299 empleados
         //299 porque los arreglos empiezan en 0, en total son 300
 
@@ -48,15 +49,20 @@ string Campus::getNombre() {
     return nombre;
 }
 
-
+/*Con este metodo podemos agregar nuestras clases al arreglo de personas
+    @param string, string, int, y string
+    @return void
+*/
 void Campus::agregarPersonas(string persona, string nom, int age, string ciudad) {
+    //dependiendo del tipo de persona que se desee agregar se cumple el condicional
     if(persona == "estudiante") {
         string career,auxApoyo;
         bool apoyo;
         int clases;
         float becaPorc;
-        cout << "Carrera" << endl;cin >> career;
-        cout<<"Clases"<<endl;cin>>clases;
+        //Pedimos el resto de datos para crear a un Estudiante
+        cout << "Carrera" << endl;getline(cin,career);
+        cout<<"Numero de clases"<<endl;cin>>clases;
         cout << "Tiene beca (y/n)" << endl;cin >> auxApoyo;
         if (auxApoyo == "y") {
             apoyo = true;
@@ -65,34 +71,42 @@ void Campus::agregarPersonas(string persona, string nom, int age, string ciudad)
             cout << "Porcentaje de beca (En decimales)" << endl;
             cin >> becaPorc;
         }
+        //Y lo creamos en el heap
         arrPersonas[matriculaEst] = new Estudiante(nom, age, ciudad, career, clases, apoyo, becaPorc);
         matriculaEst++;
     }
     else if(persona=="profesor"){
         int clases,salarioInd;
-        cout<<"Clases"<<endl;cin>>clases;
+        //Pedimos el resto de datos para crear a un Profesor
+        cout<<"Numero de clases"<<endl;cin>>clases;
         cout<<"Salario"<<endl;cin>>salarioInd;
+        //Y lo creamos en el heap
         arrPersonas[matriculaProf]= new Profesor(nom,age,ciudad,clases,salarioInd);
         matriculaProf++;
     }
     else if(persona=="empleado"){
         int salarioInd;
         string puesto, uniforme;
+        //Pedimos el resto de datos para crear a un Empleado
         cout<<"Salario"<<endl;cin>>salarioInd;
-        cout<<"Puesto"<<endl;cin>>puesto;
-        cout<<"Uniforme"<<endl;cin>>uniforme;
+        cin.ignore();
+        cout<<"Puesto"<<endl;getline(cin,puesto);
+        cout<<"Uniforme"<<endl;getline(cin,uniforme);
+        //Y lo creamos en el heap
         arrPersonas[emplID]= new Empleado(nom,age,ciudad,salarioInd,puesto,uniforme);
         emplID++;
     }
 }
 
 //Muestra el número total de personas en el campus, divididas por subclase
+//@param
+//@return
 void Campus::mostrarTotalPersonas() {
 //Estudiantes
     if (matriculaEst != 0) {
         cout << "Total de estudiantes registrados: " << matriculaEst << endl;
         for (int i = 0; i < matriculaEst; i++) {
-            //Usamos método de estudiante para obtener nombre
+            //Usamos método de persona para obtener nombre
             cout << arrPersonas[i]->getNombre() << "  Matricula: "<< i << endl;
         }
         cout<<endl;
@@ -104,7 +118,7 @@ void Campus::mostrarTotalPersonas() {
     if (matriculaProf != 100) {
         cout << "Total de profesores registrados: " << matriculaProf-100 << endl;
         for (int i = 100; i < matriculaProf; i++) {
-            //Usamos método de profesor para obtener nombre
+            //Usamos método de persona para obtener nombre
             cout << arrPersonas[i]->getNombre() << "  Matricula: "<< i << endl;
         }
         cout<<endl;
@@ -116,6 +130,7 @@ void Campus::mostrarTotalPersonas() {
     if (emplID != 200) {
         cout << "Total de empleados registrados: " << emplID-200 << endl;
         for (int i = 200; i < emplID; i++) {
+            //Usamos método de persona para obtener nombre
             cout << arrPersonas[i]->getNombre() << " ID: "<< i << endl;
         }
         cout<<endl;
@@ -124,6 +139,17 @@ void Campus::mostrarTotalPersonas() {
     }
 }
 
+//Muestra la informacion de una persona en especifico
+//@param int
+//@return
+void Campus::mostrarInfoPersona(int auxMatricula) {
+    arrPersonas[auxMatricula]->mostrarInfo();
+}
+
+
+//Muestra todos los estudiantes registrados junto con sus datos
+//@param
+//@return
 void Campus::mostrarTotalEstudiantes(){
     if (matriculaEst == 0) {
         cout << "No hay estudiantes registrados " << endl;
@@ -137,10 +163,9 @@ void Campus::mostrarTotalEstudiantes(){
     }
 }
 
-void Campus::mostrarInfoPersona(int auxMatricula) {
-    arrPersonas[auxMatricula]->mostrarInfo();
-}
-
+//Muestra todos los profesores registrados junto con sus datos
+//@param
+//@return
 void Campus::mostrarTotalProfesores() {
     if (matriculaProf == 100) {
         cout << "No hay profesores registrados " << endl;
@@ -154,6 +179,9 @@ void Campus::mostrarTotalProfesores() {
     }
 }
 
+//Muestra todos los empleados registrados junto con sus datos
+//@param
+//@return
 void Campus::mostrarTotalEmpleados() {
     if (matriculaProf == 200) {
         cout << "No hay empleados registrados " << endl;
@@ -168,6 +196,9 @@ void Campus::mostrarTotalEmpleados() {
     }
 }
 
+//Crea un conjunto de personas predeterminadas para facilitar la prueba del programa
+//@param
+//@return
 void Campus::crearPersonasBase() {
     //Estudiantes
     arrPersonas[matriculaEst] = new Estudiante("Ricardo", 19, "Qro", "IRS",5, true, 0.5);
@@ -184,9 +215,9 @@ void Campus::crearPersonasBase() {
     cout<<"Profesores registrados"<<endl;
 
     //Empleados
-    arrPersonas[emplID]= new Empleado("Juan",20,"CDMX",500,"Cajero","Playera roja");
+    arrPersonas[emplID]= new Empleado("Juan",20,"CDMX",500,"Cajero", "Playera roja");
     emplID++;
-    arrPersonas[emplID]= new Empleado("Jose",23,"Veracruz",800,"Seguridad","Playera blanca");
+    arrPersonas[emplID]= new Empleado("Jose",23,"Veracruz",800,"Seguridad", "Camisa blanca");
     emplID++;
     cout<<"Empleados registrados"<<endl;
 }
