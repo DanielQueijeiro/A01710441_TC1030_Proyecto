@@ -5,6 +5,7 @@
     También podremos ver la información de cada persona registrada en el sistema.
 */
 #include <iostream>
+#include <zconf.h>
 #include "Campus.h"//Incluimos el archivo Campus.h para trabajar
 //con nuestras clases Campus, personas, estudiante, profesor y empleado.
 
@@ -15,15 +16,9 @@ using namespace std;
 int main() {
     //Definimos nuestros arreglos de tipo estudiante, profesor, y empleado
     //Usamos apuntadores para poder emplear polimorfismo
-    Estudiante *estudiantes[100];
-    Profesor *profesores[100];
-    Empleado *empleados[100];
 
     //Definimos nuestras variables
     int op;
-    int estMatricula = 0;
-    int profMatricula = 0;
-    int emplID = 0;
     string nomCampus;
     bool menu = true;
 
@@ -51,8 +46,8 @@ int main() {
             cout<<"\n\n\n\n";
             cout << "Por favor ingrese la opcion que desee realizar" << endl;
             cout << "1.- Agregar estudiantes" << endl;
-            cout << "2.- Agregar o mostrar clases de un estudiante" << endl;
-            cout << "3.- Mostrar estudiantes" << endl;
+            cout << "2.- Mostrar estudiantes registrados" << endl;
+            cout << "3.- Mostrar informacion de un estudiante" << endl;
             cout << "4.- Regresar al menu principal"<< endl;
             op = 0;
             cin>>op;
@@ -68,77 +63,48 @@ int main() {
                 cout << "Ingrese los datos de los alumnos" << endl;
                 //Ciclo para poder crear los alumnos que el usuario quiere
                 for (int i = 0; i < auxEst; i++) {
-                    string nom, ciudad, career, auxApoyo;
+                    string nom,ciudad, rol="estudiante";
                     int age;
-                    bool apoyo;
-                    float becaPorc;
                     //Solicitamos los datos requeridos para crear un alumno
                     cout << "Nombre" << endl;cin >> nom;
                     cout << "Edad" << endl;cin >> age;
                     cout << "Ciudad" << endl;cin >> ciudad;
-                    cout << "Carrera" << endl;cin >> career;
-                    cout << "Tiene beca (y/n)" << endl;cin >> auxApoyo;
-                    if (auxApoyo == "y") {
-                        apoyo = true;
-                    } else { apoyo = false; }
-                    if (apoyo) {
-                        cout << "Porcentaje de beca (En decimales)" << endl;
-                        cin >> becaPorc;
-                    }
-                        //Creamos los estudiantes
-                        estudiantes[estMatricula] = new Estudiante(nom, age, ciudad, career, apoyo, becaPorc);
                         //Los agregamos al campus
-                        campus.agregarEstudiante(*estudiantes[estMatricula]);
+                        campus.agregarPersonas(rol,nom, age, ciudad);
                         cout << endl;
                         cout << "Estudiantes registrados" << endl;
-                    estMatricula++;
                 }
+                
             }
 
-            //Mostrar o agregar clases a un estudiante
+            //Mostrar estudiantes
             else if(op==2){
                 op = 0;
-                int auxMatricula, auxClases, auxOp;
+                cout<<"\n\n\n\n";
+                campus.mostrarTotalEstudiantes();
+                
+            }
+
+            //Mostrar informacion de un estudiante
+            else if(op==3){
+                op = 0;
+                int auxMatricula;
                 string auxNombre;
                 cout<<"\n\n\n\n";
                 cout << "Por favor ingrese la matricula del estudiante al que desea seleccionar:" << endl;
-                cout << "Recordar que las matriculas empiezan en 0" << endl;
+                cout << "Recordar que las matriculas de estudiantes empiezan en 0 y llegan hasta 99" << endl;
                 cout<<"A";
                 //La variable nos servira para buscar al estudiante que se desea
                 cin>>auxMatricula;
                 cout<<"\n\n\n\n";
+                if(auxMatricula<0 || auxMatricula>99){
+                    cout<<"Matricula invalida"<<endl;
+                }
                 //Usamos método de clase Estudiante para obtener el nombre
-                cout<<"Estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
-                cout<<"Desea agregar o mostrar clases? (Agregar = 0, Mostrar = 1)"<<endl;
-                cin>>auxOp;
-                if(auxOp==0) {
-                    cout<<"\n\n\n\n";
-                    cout<<"Estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
-                    cout << "Por favor ingrese la cantidad de clases que va agregar:" << endl;
-                    cin >> auxClases;
-                    cout << "Ingrese las clases que desea agregar:" << endl;
-                    //Ciclo para agregar todas las clases
-                    for (int i = 0; i < auxClases; i++) {
-                        cin >> auxNombre;
-                        //Usamos método de Estudiante para agregar clases
-                        estudiantes[auxMatricula]->agregarClases(auxNombre);
-                    }
-                    cout<<"Clases registradas"<<endl;
+                else {
+                    cout << "Matricula del estudiante: A" << auxMatricula << endl;
+                    campus.mostrarInfoPersona(auxMatricula);
                 }
-                else if(auxOp == 1){
-                    cout<<"\n\n\n\n";
-                    cout<<"Clases registradas del estudiante: "<<estudiantes[auxMatricula]->getNombre()<<endl;
-                    //Usamos método de Estudiante para mostrar el total de clases que el alumno tiene
-                    estudiantes[auxMatricula]->mostrarClases();
-                }
-                else{cout<<"Opcion no valida"<<endl;}
-            }
-
-            //Mostrar estudiantes
-            else if(op==3){
-                op = 0;
-                cout<<"\n\n\n\n";
-                campus.mostrarEstudiantes();
             }
 
             //Regresar al menu principal
@@ -151,10 +117,9 @@ int main() {
             cout<<"\n\n\n\n";
             cout << "Por favor ingrese la opcion que desee realizar" << endl;
             cout << "1.- Agregar profesores" << endl;
-            cout << "2.- Agregar o mostrar clases de un profesor" << endl;
-            cout << "3.- Mostrar profesores" << endl;
+            cout << "2.- Mostrar profesores registrados" << endl;
+            cout << "3.- Mostrar informacion de un profesor" << endl;
             cout << "4.- Regresar al menu principal"<< endl;
-            op = 0;
             cin>>op;
 
                 //Agregar profesores
@@ -168,66 +133,45 @@ int main() {
                     cout<<"Ingrese los datos de los profesores"<<endl;
                     //Ciclo para agregar todos los profesores que el usuario quiere
                     for(int i=0;i<auxProf;i++){
-                        string nom, ciudad;
-                        int age, salarioInd;
+                        string nom, ciudad, rol="profesor";
+                        int age;
                         //Solicitamos información para crear un profesor
                         cout<<"Nombre"<<endl;cin>>nom;
                         cout<<"Edad"<<endl;cin>>age;
                         cout<<"Ciudad"<<endl;cin>>ciudad;
-                        cout<<"Salario"<<endl;cin>>salarioInd;
-
-                        //Creamos los profesores
-                        profesores[profMatricula] = new Profesor(nom, age, ciudad, salarioInd);
                         //Los agregamos al campus
-                        campus.agregarProfesor(*profesores[profMatricula]);
+                        campus.agregarPersonas(rol,nom, age, ciudad);
                         }
-                    profMatricula++;
                     cout<<"Profesores registrados"<<endl;
                 }
 
-                //Agregar o mostrar clases del profesor
+                //Mostrar todos los profesores
                 else if(op==2){
                     op = 0;
-                    int auxMatricula, auxClases, auxOp;
-                    string auxNombre;
                     cout<<"\n\n\n\n";
-                    cout << "Por favor ingrese la matricula del profesor al que agregara clases:" << endl;
-                    cout << "Recordar que las matriculas empiezan en 0" << endl;
-                    cout<<"P";
-                    cin>>auxMatricula;//Variable que nos ayudara a buscar al profesor
-                    cout<<"\n\n\n\n";
-                    //Obtenemos el nombre del profesor con un método de su clase
-                    cout<<"Profesor: "<<profesores[auxMatricula]->getNombre()<<endl;
-                    cout<<"Desea agregar o mostrar clases? (Agregar = 0, Mostrar = 1)"<<endl;
-                    cin>>auxOp;
-                    if(auxOp==0) {
-                        cout<<"\n\n\n\n";
-                        cout<<"Profesor: "<<profesores[auxMatricula]->getNombre()<<endl;
-                        cout << "Por favor ingrese la cantidad de clases que va agregar:" << endl;
-                        cin >> auxClases;
-                        cout << "Ingrese las clases que desea agregar:" << endl;
-                        //Ciclo para agregar todas las clases
-                        for (int i = 0; i < auxClases; i++) {
-                            cin >> auxNombre;
-                            //Usamos método de Profesor para agregar clases
-                            profesores[auxMatricula]->agregarClases(auxNombre);
-                        }
-                        cout<<"Clases registradas"<<endl;
-                    }
-                    else if(auxOp == 1){
-                        cout<<"\n\n\n\n";
-                        cout<<"Clases registradas del profesor: "<<profesores[auxMatricula]->getNombre()<<endl;
-                        //Usamos método de Profesor para mostrar el total de clases que el profesor tiene
-                        profesores[auxMatricula]->mostrarClases();
-                    }
-                    else{cout<<"Opcion no valida"<<endl;}
+                    campus.mostrarTotalProfesores();
                 }
 
-                //Mostrar profesores
-                else if(op==3){
+                //Mostrar informacion de un profesor
+                else if(op==3) {
                     op = 0;
-                    cout<<"\n\n\n\n";
-                    campus.mostrarProfesores();
+                    int auxMatricula;
+                    string auxNombre;
+                    cout << "\n\n\n\n";
+                    cout << "Por favor ingrese la matricula del profesor al que desea seleccionar:" << endl;
+                    cout << "Recordar que las matriculas de profesores empiezan en 100 y llegan hasta 199" << endl;
+                    cout << "P";
+                    //La variable nos servira para buscar al profesor que se desea
+                    cin >> auxMatricula;
+                    cout << "\n\n\n\n";
+                    if (auxMatricula < 100 || auxMatricula > 199) {
+                        cout << "Matricula invalida" << endl;
+                    }
+                    else{
+                        cout << "Matricula del profesor: P" << auxMatricula << endl;
+                    //Usamos método de clase Profesor para obtener informacion
+                        campus.mostrarInfoPersona(auxMatricula);
+                    }
                 }
 
                 //Regresar a menu principal
@@ -235,90 +179,87 @@ int main() {
         }
 
         //Administrar empleados
-        else if(op==3){
-            cout<<"\n\n\n\n";
+        else if(op==3) {
+            cout << "\n\n\n\n";
             cout << "Por favor ingrese la opcion que desee realizar" << endl;
             cout << "1.- Agregar empleados" << endl;
             cout << "2.- Mostrar empleados" << endl;
-            cout << "3.- Regresar al menu principal"<< endl;
+            cout << "3.- Mostrar informacion de un empleado" << endl;
+            cout << "4.- Regresar al menu principal" << endl;
             op = 0;
-            cin>>op;
-        }
+            cin >> op;
 
             //Agregar empleado
-            if(op==1){
+            if (op == 1) {
                 op = 0;
-                cout<<"\n\n\n\n";
-                cout<<"Por favor ingrese el numero de empleados que agregara"<<endl;
+                cout << "\n\n\n\n";
+                cout << "Por favor ingrese el numero de empleados que agregara" << endl;
                 int auxEmpl; //Variable para ciclo for
                 cin >> auxEmpl;
-                cout<<"Ingrese los datos de los empleados"<<endl;
-                for(int i=0; i < auxEmpl; i++){
-                    int age, salarioInd;
-                    string nom, ciudad, rol, uniforme;
-                    //Solicitamos los datos necesarios para crear un empleado
-                    cout<<"Nombre"<<endl;cin>>nom;
-                    cout<<"Edad"<<endl;cin>>age;
-                    cout<<"Ciudad"<<endl;cin>>ciudad;
-                    cout<<"Salario"<<endl;cin>>salarioInd;
-                    cout<<"Rol"<<endl;cin>>rol;
-                    cout<<"Uniforme"<<endl;cin>>uniforme;
+                cout << "Ingrese los datos de los empleados" << endl;
+                for (int i = 0; i < auxEmpl; i++) {
                     //Creamos empleado
-                    empleados[emplID] = new Empleado(nom, age, ciudad, salarioInd, rol, uniforme);
+                    string nom, ciudad, rol = "empleado";
+                    int age;
+                    cout << "Nombre" << endl;
+                    cin >> nom;
+                    cout << "Edad" << endl;
+                    cin >> age;
+                    cout << "Ciudad" << endl;
+                    cin >> ciudad;
                     //Lo agregamos al campus
-                    campus.agregarEmpleado(*empleados[emplID]);
+                    campus.agregarPersonas(rol, nom, age, ciudad);
                 }
-                emplID++;
-                cout<<"Empleados registrados"<<endl;
+                cout << "Empleados registrados" << endl;
+
             }
 
-            //Mostrar empleados
-            else if(op==2){
+                //Mostrar empleados
+            else if (op == 2) {
                 op = 0;
-                cout<<"\n\n\n\n";
-                campus.mostrarEmpleados();
-            }
-            //Regresar a menu
-            else if(op==3){}
+                cout << "\n\n\n\n";
+                campus.mostrarTotalEmpleados();
 
+            }
+
+                //Mostrar informacion de un profesor
+            else if (op == 3) {
+                op = 0;
+                int auxID;
+                string auxNombre;
+                cout << "\n\n\n\n";
+                cout << "Por favor ingrese el ID del empleado al que desea seleccionar:" << endl;
+                cout << "Recordar que los ID de empleados empiezan en 200 y llegan hasta 299" << endl;
+                cout << "ID";
+                //La variable nos servira para buscar al profesor que se desea
+                cin >> auxID;
+                cout << "\n\n\n\n";
+                if(auxID<200 || auxID>299) {
+                    cout << "ID invalido" << endl;
+                }
+                //Usamos método de clase Profesor para obtener informacion
+                else {
+                    cout << "ID del empleado: ID" << auxID << endl;
+                    campus.mostrarInfoPersona(auxID);
+                }
+            }
+                //Regresar a menu
+            else if (op == 4) {}
+        }
 
         //Mostrar todas las personas registradas en el campus
         else if(op==4){
+            op=0;
             cout<<"\n\n\n\n";
-            campus.mostrarPersonas();
+            campus.mostrarTotalPersonas();
             }
 
         //Crear un par de personas en el campus para ver que si funciona bien el codigo
         else if(op==5){
-            op==0;
+            op=0;
             cout<<"\n\n\n\n";
             cout<<"Se crearan 2 estudiantes, 2 profesores y 2 empleados"<<endl;
-            //Estudiantes
-            estudiantes[estMatricula] = new Estudiante("Ricardo", 19, "Qro", "IRS", true, 0.5);
-            campus.agregarEstudiante(*estudiantes[estMatricula]);
-            estMatricula++;
-            estudiantes[estMatricula] = new Estudiante("Daniel", 19, "Qro", "ITC", true, 0.7);
-            campus.agregarEstudiante(*estudiantes[estMatricula]);
-            estMatricula++;
-            cout << "Estudiantes registrados" << endl;
-
-            //Profesores
-            profesores[profMatricula] = new Profesor("Benji", 33, "Qro", 1000);
-            campus.agregarProfesor(*profesores[profMatricula]);
-            profMatricula++;
-            profesores[profMatricula] = new Profesor("Pedro", 45, "Qro", 1000);
-            campus.agregarProfesor(*profesores[profMatricula]);
-            profMatricula++;
-            cout<<"Profesores registrados"<<endl;
-
-            //Empleados
-            empleados[emplID]= new Empleado("Juan",20,"CDMX",500,"Cajero","Playera roja");
-            campus.agregarEmpleado(*empleados[emplID]);
-            emplID++;
-            empleados[emplID]= new Empleado("Jose",23,"Veracruz",800,"Seguridad","Playera blanca");
-            campus.agregarEmpleado(*empleados[emplID]);
-            emplID++;
-            cout<<"Empleados registrados"<<endl;
+            campus.crearPersonasBase();
         }
 
         //Salir

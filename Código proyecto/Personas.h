@@ -27,6 +27,7 @@ public: //Métodos
     string getNombre();
     int getEdad();
     string getLugar();
+    virtual float calcularPago()=0;
     virtual void mostrarInfo()=0;
 };
 
@@ -70,15 +71,14 @@ class Estudiante : public Personas{
         string carrera;
         bool beca;
         float porcBeca;
-        string clases[10];
         int numClases;
-        int *ptr_numClases = &numClases;
 
     public://Métodos
         Estudiante(): Personas(){}//Constructor base
 
         //Constructor
-        Estudiante(string nom, int age, string ciudad, string career, bool apoyo, float becaPorc): Personas(nom, age, ciudad){
+        Estudiante(string nom, int age, string ciudad, string career,int clases, bool apoyo, float becaPorc): Personas(nom, age, ciudad){
+            numClases = clases;
             carrera = career;
             beca = apoyo;
             porcBeca = becaPorc;
@@ -87,10 +87,8 @@ class Estudiante : public Personas{
         string getCarrera();
         string getBeca();
         float getPorcBeca();
-
-        void agregarClases(string claseInd);
-        float obtenerColegiatura();
-        void mostrarClases();
+        int getClases();
+        float calcularPago();
         void mostrarInfo();
 };
 
@@ -117,53 +115,38 @@ float Estudiante::getPorcBeca() {
     }
 }
 
-/*Método para agregar clases al estudiante
- * Aquí es importante señalar el uso de apuntadores para aumentar numClases, porque en caso de no usar apuntadores
- * estaríamos creando una variable temporal y no realmente aumentando el valor de numClases, lo cual ocasionaria problemas
- * con otros métodos que ocupan numClases.
-*/
-void Estudiante::agregarClases(string claseInd) {
-    clases[numClases] = claseInd;
-    *ptr_numClases = *ptr_numClases+1;
+int Estudiante::getClases() {
+    return numClases;
 }
 
+/*Método para agregar clases al estudiante
 //Método para calcular colegiatura
-//Igual usamos el apuntador para acceder al valor de numClases
-float Estudiante::obtenerColegiatura() {
+Igual usamos el apuntador para acceder al valor de numClases
+*/
+float Estudiante::calcularPago() {
     //Costo de clase $8,105
-    if(*ptr_numClases==0){return 0;}
+    if(numClases==0){return 0;}
     else{
-        float totalColegiatura = (*ptr_numClases * 8105)*(1-porcBeca);
+        float totalColegiatura = (numClases * 8105)*(1-porcBeca);
         return totalColegiatura;
     }
 }
 
-//Método para mostrar todas las clases registradas del alumno
-void Estudiante::mostrarClases() {
-    if(*ptr_numClases==0){
-        cout<<"El estudiante no esta registrado en ninguna clase"<<endl;
-    }
-    else {
-        for (int i; i < *ptr_numClases; i++) {
-            cout << clases[i] << endl;
-        }
-    }
-}
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase estudiante.
 void Estudiante::mostrarInfo() {
     cout << "Nombre: " << getNombre() << "\n" << "Edad: " << getEdad() << "\n";
     cout << "Lugar natal: " << getLugar() << "\n" << "Carrera: " << getCarrera() << "\n";
-    cout << "Clases inscritas: " << *ptr_numClases << "\n";
+    cout << "Clases inscritas: " << getClases() << "\n";
     cout << getBeca() << "\n";
     if(beca){
         cout<<"Porcentaje de beca: " << getPorcBeca() << "\n";
     }
-    if (*ptr_numClases == 0) {
+    if (numClases == 0) {
         cout<<"No hay clases registradas, no se puede calcular el pago mensual \n";
     }
     else {
-        cout << "Pago mensual de colegiatura es: " << obtenerColegiatura() << "\n\n";
+        cout << "Pago mensual de colegiatura es: " << calcularPago() << "\n\n";
     }
 }
 
@@ -180,54 +163,38 @@ class Profesor: public Personas {
 private://Atributos
     string clases[10];
     int numClases;
-    int *ptr_numClases = &numClases;
     int salarioClase;
 
 public://Métodos
     Profesor(): Personas(){};//Constructor base
 
     //Constructor
-    Profesor(string nom, int age, string ciudad, int salarioInd) : Personas(nom, age, ciudad) {
-        numClases = 0;
+    Profesor(string nom, int age, string ciudad,int clases, int salarioInd) : Personas(nom, age, ciudad) {
+        numClases = clases;
         salarioClase = salarioInd;
     }
 
-    void agregarClases (string claseInd);
-    void mostrarClases();
-    int obtenerSalario();
+    int getClases();
+    float calcularPago();
     void mostrarInfo();
 
 };
 
-//Método para agregar clases al profesor
-void Profesor::agregarClases(string claseInd) {
-    clases[numClases] = claseInd;
-    *ptr_numClases = *ptr_numClases+1;
-}
-
-//Método para mostrar todas las clases del profesor
-void Profesor::mostrarClases() {
-    if(*ptr_numClases==0){
-        cout<<"El profesor no esta registrado en ninguna clase"<<endl;
-    }
-    else {
-        for (int i; i < *ptr_numClases; i++) {
-            cout << clases[i] << endl;
-        }
-    }
+int Profesor::getClases() {
+    return numClases;
 }
 
 //Método para calcular el salario total del profesor dependiendo de clases registradas
-int Profesor::obtenerSalario() {
-    int salarioTotal = *ptr_numClases*salarioClase;
+float Profesor::calcularPago() {
+    int salarioTotal = numClases*salarioClase;
     return salarioTotal;
 }
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase profesor
 void Profesor::mostrarInfo() {
     cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
-    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<*ptr_numClases<<"\n";
-    cout<<"Salario mensual: "<<obtenerSalario()<<"\n\n";
+    cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Clases que da: "<<getClases()<<"\n";
+    cout<<"Salario mensual: "<<calcularPago()<<"\n\n";
 }
 
 
@@ -235,7 +202,7 @@ void Profesor::mostrarInfo() {
 /*
     Clase hija Empleado
     Esta clase tendra atributos adicionales que puede tener un empleado:
-    un salario mensual, uniforme y rol a cumplir.
+    un salario mensual, uniforme y Puesto a cumplir.
     Y tendrá métodos que permitan obtener información del empleado
     al igual que métodos para mostrar su información y su salario.
 */
@@ -243,22 +210,22 @@ class Empleado:public Personas{
     private://Atributos
         int salarioMensual;
         string uniforme;
-        string rol;
+        string puesto;
 
     public://Métodos
         Empleado(): Personas(){};//Constructor base
 
         //Constructor
-        Empleado(string nom, int age, string ciudad, int salarioInd, string role, string uniform): Personas(nom, age, ciudad){
+        Empleado(string nom, int age, string ciudad, int salarioInd, string _puesto, string uniform): Personas(nom, age, ciudad){
             salarioMensual = salarioInd;
             uniforme = uniform;
-            rol = role;
+            puesto = _puesto;
         }
 
 
     string getUniforme();
-    string getRol();
-    int getSalario();
+    string getPuesto();
+    float calcularPago();
     void mostrarInfo();
 };
 
@@ -267,19 +234,19 @@ class Empleado:public Personas{
         return uniforme;
     }
 
-    string Empleado::getRol() {
-        return rol;
+    string Empleado::getPuesto() {
+        return puesto;
     }
 
-    int Empleado::getSalario(){
+    float Empleado::calcularPago(){
         return salarioMensual;
     }
 
 //Método de polimorfismo donde se muestra la información básica y única de la clase empleado.
     void Empleado::mostrarInfo() {
         cout<<"Nombre: "<<getNombre()<<"\n"<<"Edad: "<<getEdad()<<"\n";
-        cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Rol: "<<getRol()<<"\n";
-        cout<<"Uniforme: "<<getUniforme()<<"\n"<<"Salario mensual: "<<getSalario()<<"\n\n";
+        cout<<"Lugar natal: "<<getLugar()<<"\n"<<"Puesto: "<<getPuesto()<<"\n";
+        cout<<"Uniforme: "<<getUniforme()<<"\n"<<"Salario mensual: "<<calcularPago()<<"\n\n";
     }
 
 #endif //PERSONAS_H
