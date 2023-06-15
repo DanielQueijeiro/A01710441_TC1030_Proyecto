@@ -1,6 +1,6 @@
 /*
     Created by Daniel Queijeiro A01710441 on 26/05/2023.
-    En el main podremos crear nuestro campus para poder empezar a añadir personas
+    En el main podremos crear nuestro campus para poder empezar a crear personas
     y administrarlas.
 */
 #include <iostream>

@@ -1,10 +1,10 @@
 /*
     Created by Daniel Queijeiro A01710441 on 24/05/2023.
-    Esta clase nos sirve para definir al objeto Campus, el cual almacenara mediante agregación
+    Esta clase nos sirve para definir al objeto Campus, el cual almacenara mediante composición
     a estudiantes, profesores y empleados.
     Sus atributos son: nombre del campus, matriculas únicas para estudiantes y profesores, e ID's
     para los empleados.
-    Al igual que la parte mas importante, arreglos de cada subclase de Persona que será registrada.
+    Al igual que la parte mas importante, un arreglo único para Personas.
 */
 
 #ifndef CAMPUS_H

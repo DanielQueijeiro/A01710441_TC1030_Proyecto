@@ -2,7 +2,6 @@
 #ifndef PERSONAS_H
 #define PERSONAS_H
 
-#include <sstream>
 #include <iostream>
 
 using namespace std;
@@ -12,7 +11,7 @@ de la cuál crearemos las clases hijas: Estudiante, Profesor, y Empleado.
 La clase tendrá atributos básicos que cualquier persona tiene:
 Nombre, edad, y lugar natal.
 Al igual que tendrá métodos para acceder a esos datos.
-Y un método con el que podremos aplicar polimorfismo.
+Y dos métodos con los que podremos aplicar polimorfismo.
 */
 class Personas {
 private: //Atributos
@@ -68,9 +67,9 @@ float Personas::calcularPago() {
 /*
     Clase hija Estudiante
     Esta clase tendra atributos adicionales que puede tener un estudiante:
-    carrera, beca, porcentaje de beca, un arreglo con sus clases, número de clases.
+    carrera, beca, porcentaje de beca, y número de clases.
     Y tendrá métodos que permitan obtener información del estudiante
-    al igual que métodos para añadirle clases al alumno, y calcular su pago de colegiatura.
+    al igual que un método para calcular su pago de colegiatura.
 */
 class Estudiante : public Personas{
     private://Atributos
@@ -162,9 +161,9 @@ void Estudiante::mostrarInfo() {
 /*
     Clase hija Profesor
     Esta clase tendra atributos adicionales que puede tener un profesor:
-    un arreglo con sus clases, número de clases, y un salario por clase.
+    número de clases, y un salario por clase.
     Y tendrá métodos que permitan obtener información del profesor
-    al igual que métodos para añadirle clases al profesor, y calcular su salario total.
+    al igual que un método para calcular su salario total.
 */
 class Profesor: public Personas {
 private://Atributos
@@ -214,7 +213,7 @@ void Profesor::mostrarInfo() {
     Esta clase tendra atributos adicionales que puede tener un empleado:
     un salario mensual, uniforme y puesto a cumplir.
     Y tendrá métodos que permitan obtener información del empleado
-    al igual que métodos para mostrar su información y su salario.
+    al igual que un método para mostrar su salario.
 */
 class Empleado:public Personas{
     private://Atributos
